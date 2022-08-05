@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
+import {View, Text, FlatList, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {FAB, List, Portal, Provider} from 'react-native-paper';
+import {FAB, List} from 'react-native-paper';
 import Colors from '../../../../Global/colorScheme';
 
 const Home = ({navigation}) => {
@@ -22,8 +22,6 @@ const Home = ({navigation}) => {
       setdb(null);
     }
   }, []);
-
-  console.log(typeof db);
 
   return (
     <View style={styles.container}>
