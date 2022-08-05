@@ -1,6 +1,6 @@
 const Colors = {
   color: {
-    primary: '#009eef',
+    primary: '#FF0000',
     fulldark: '#000000',
   },
 };

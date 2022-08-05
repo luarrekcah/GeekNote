@@ -16,9 +16,9 @@ const Main = ({navigation}) => {
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
           if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'home-outline';
+            iconName = focused ? 'apps' : 'apps-outline';
           } else if (route.name === 'Config') {
-            iconName = focused ? 'cart' : 'cart-outline';
+            iconName = focused ? 'options' : 'options-outline';
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
