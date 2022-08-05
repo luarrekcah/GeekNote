@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {FAB, Portal, Provider} from 'react-native-paper';
+import {FAB, List, Portal, Provider} from 'react-native-paper';
 import Colors from '../../../../Global/colorScheme';
 
 const Home = ({navigation}) => {
@@ -27,19 +27,27 @@ const Home = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Text>Cards</Text>
       {db === null ? (
-        <Text>Adicione uma nota!</Text>
+        <View style={styles.nullWarn}>
+          <Text style={styles.nullWarnText}>Seja bem vindo ao app!</Text>
+          <Text style={styles.nullWarnTextSec}>
+            Adicione uma nota ou um card inicial
+          </Text>
+        </View>
       ) : (
-        <FlatList
-          data={db}
-          keyExtractor={item => item.id}
-          renderItem={({item}) => (
-            <View style={styles.itemsContainer}>
-              <Text>{item.name}</Text>
-            </View>
-          )}
-        />
+        <List.Section>
+          <List.Subheader>Cards</List.Subheader>
+          <List.Subheader>Anotações</List.Subheader>
+          <FlatList
+            data={db}
+            keyExtractor={item => item.id}
+            renderItem={({item}) => (
+              <View style={styles.itemsContainer}>
+                <Text>{item.name}</Text>
+              </View>
+            )}
+          />
+        </List.Section>
       )}
       <FAB.Group
         open={open}
@@ -71,6 +79,20 @@ const styles = new StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
+  },
+  nullWarn: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  nullWarnText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: Colors.color.grey,
+  },
+  nullWarnTextSec: {
+    fontSize: 15,
+    color: Colors.color.grey,
   },
 });
 
