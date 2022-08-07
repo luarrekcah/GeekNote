@@ -8,14 +8,16 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {FAB, List} from 'react-native-paper';
+import {Searchbar, FAB, List} from 'react-native-paper';
 import Colors from '../../../../Global/colorScheme';
 
 const Home = ({navigation}) => {
   const [cards, setCards] = useState([]);
   const [state, setState] = useState({open: false});
   const [refreshing, setRefreshing] = React.useState(false);
+  const [searchQuery, setSearchQuery] = React.useState('');
 
+  const onChangeSearch = query => setSearchQuery(query);
   const wait = timeout => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   };
@@ -66,6 +68,11 @@ const Home = ({navigation}) => {
         </View>
       ) : (
         <List.Section>
+          <Searchbar
+            placeholder="Search"
+            onChangeText={onChangeSearch}
+            value={searchQuery}
+          />
           <FlatList
             data={cards}
             keyExtractor={item => item.id}
