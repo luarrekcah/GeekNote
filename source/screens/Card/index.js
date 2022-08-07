@@ -1,10 +1,36 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {
+  View,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  RefreshControl,
+  StyleSheet,
+} from 'react-native';
 import Colors from '../../Global/colorScheme';
-import {FAB} from 'react-native-paper';
+import {List, FAB} from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Card = ({route, navigation}) => {
   const {card} = route.params;
+
+  const [cardNow, setCardNow] = React.useState(card);
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const wait = timeout => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  };
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    if (AsyncStorage.getItem('cards')) {
+      AsyncStorage.getItem('cards').then(data => {
+        const cardAc = data.find(item => item.id === card.id);
+        setCardNow(cardAc);
+      });
+    }
+    wait(2000).then(() => setRefreshing(false));
+  }, [card.id]);
 
   return (
     <View style={styles.container}>
@@ -15,7 +41,26 @@ const Card = ({route, navigation}) => {
       </View>
       <View style={styles.container}>
         {card.items.length !== 0 ? (
-          <Text>Item</Text>
+          <FlatList
+            data={cardNow.items}
+            keyExtractor={item => item.id}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            renderItem={({item}) => (
+              <TouchableOpacity>
+                <View>
+                  <Text>
+                    <List.Item
+                      title={item.title}
+                      description={item.description}
+                      left={props => <List.Icon {...props} icon="folder" />}
+                    />
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )}
+          />
         ) : (
           <View style={styles.nullWarn}>
             <Text style={styles.nullWarnText}>Seja bem vindo ao card!</Text>
