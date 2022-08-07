@@ -59,7 +59,7 @@ const Home = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      {cards === null ? (
+      {cards === null || cards.length === 0 ? (
         <View style={styles.nullWarn}>
           <Text style={styles.nullWarnText}>Seja bem vindo ao app!</Text>
           <Text style={styles.nullWarnTextSec}>
