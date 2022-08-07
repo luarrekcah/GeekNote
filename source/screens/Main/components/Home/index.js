@@ -97,20 +97,23 @@ const styles = new StyleSheet.create({
   },
   itemsContainer: {
     padding: 40,
-    backgroundColor: Colors.color.fulldark,
+    backgroundColor: Colors.color.card.background,
     borderRadius: 40,
     margin: 10,
   },
   itemsTitle: {
+    color: Colors.color.card.text,
     fontSize: 25,
     fontWeight: 'bold',
     marginBottom: 10,
   },
   itemsDesc: {
+    color: Colors.color.card.text,
     fontSize: 20,
     marginVertical: 20,
   },
   itemsValue: {
+    color: Colors.color.card.text,
     fontSize: 30,
     fontWeight: 'bold',
   },
