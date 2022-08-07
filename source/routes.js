@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import Main from './screens/Main';
 import NewCard from './screens/NewCard';
+import Card from './screens/Card';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ const Routes = () => {
           component={NewCard}
           options={{title: 'Card'}}
         />
+        <Stack.Screen name="Card" component={Card} options={{title: 'Card'}} />
       </Stack.Navigator>
     </NavigationContainer>
   );

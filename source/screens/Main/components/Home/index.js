@@ -50,6 +50,11 @@ const Home = ({navigation}) => {
     }
   }, []);
 
+  const openCard = cardId => {
+    const card = cards.find(item => item.id === cardId);
+    navigation.navigate('Card', {card: card});
+  };
+
   return (
     <View style={styles.container}>
       {cards === null ? (
@@ -68,7 +73,7 @@ const Home = ({navigation}) => {
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
             renderItem={({item}) => (
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => openCard(item.id)}>
                 <View style={styles.itemsContainer}>
                   <Text style={styles.itemsTitle}>{item.title}</Text>
                   <Text style={styles.itemsDesc}>{item.description}</Text>
