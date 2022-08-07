@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  RefreshControl,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FAB, List} from 'react-native-paper';
 import Colors from '../../../../Global/colorScheme';
@@ -7,10 +14,29 @@ import Colors from '../../../../Global/colorScheme';
 const Home = ({navigation}) => {
   const [cards, setCards] = useState([]);
   const [state, setState] = useState({open: false});
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const wait = timeout => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  };
 
   const onStateChange = ({open}) => setState({open});
 
   const {open} = state;
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    if (AsyncStorage.getItem('cards')) {
+      AsyncStorage.getItem('cards').then(data => {
+        const dba = JSON.parse(data);
+        setCards(dba);
+        console.log(dba);
+      });
+    } else {
+      setCards(null);
+    }
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
 
   useEffect(() => {
     if (AsyncStorage.getItem('cards')) {
@@ -38,6 +64,9 @@ const Home = ({navigation}) => {
           <FlatList
             data={cards}
             keyExtractor={item => item.id}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
             renderItem={({item}) => (
               <TouchableOpacity>
                 <View style={styles.itemsContainer}>
