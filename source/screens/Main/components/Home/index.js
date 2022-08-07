@@ -86,11 +86,11 @@ const styles = new StyleSheet.create({
   nullWarnText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: Colors.color.grey,
+    color: Colors.color.gray,
   },
   nullWarnTextSec: {
     fontSize: 15,
-    color: Colors.color.grey,
+    color: Colors.color.gray,
   },
 });
 
