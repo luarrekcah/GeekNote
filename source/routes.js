@@ -3,6 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import Main from './screens/Main';
+import NewCard from './screens/NewCard';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +15,11 @@ const Routes = () => {
           name="Main"
           component={Main}
           options={{title: 'GeekNote'}}
+        />
+        <Stack.Screen
+          name="NewCard"
+          component={NewCard}
+          options={{title: 'Card'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {View, Text, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FAB, List} from 'react-native-paper';
 import Colors from '../../../../Global/colorScheme';
 
 const Home = ({navigation}) => {
-  const [db, setdb] = useState([]);
+  const [cards, setCards] = useState([]);
   const [state, setState] = useState({open: false});
 
   const onStateChange = ({open}) => setState({open});
@@ -13,19 +13,20 @@ const Home = ({navigation}) => {
   const {open} = state;
 
   useEffect(() => {
-    if (AsyncStorage.getItem('db')) {
-      AsyncStorage.getItem('db').then(data => {
+    if (AsyncStorage.getItem('cards')) {
+      AsyncStorage.getItem('cards').then(data => {
         const dba = JSON.parse(data);
-        setdb(dba);
+        setCards(dba);
+        console.log(dba);
       });
     } else {
-      setdb(null);
+      setCards(null);
     }
   }, []);
 
   return (
     <View style={styles.container}>
-      {db === null ? (
+      {cards === null ? (
         <View style={styles.nullWarn}>
           <Text style={styles.nullWarnText}>Seja bem vindo ao app!</Text>
           <Text style={styles.nullWarnTextSec}>
@@ -34,15 +35,17 @@ const Home = ({navigation}) => {
         </View>
       ) : (
         <List.Section>
-          <List.Subheader>Cards</List.Subheader>
-          <List.Subheader>Anotações</List.Subheader>
           <FlatList
-            data={db}
+            data={cards}
             keyExtractor={item => item.id}
             renderItem={({item}) => (
-              <View style={styles.itemsContainer}>
-                <Text>{item.name}</Text>
-              </View>
+              <TouchableOpacity>
+                <View style={styles.itemsContainer}>
+                  <Text style={styles.itemsTitle}>{item.title}</Text>
+                  <Text style={styles.itemsDesc}>{item.description}</Text>
+                  <Text style={styles.itemsValue}>R$000,00</Text>
+                </View>
+              </TouchableOpacity>
             )}
           />
         </List.Section>
@@ -54,12 +57,12 @@ const Home = ({navigation}) => {
           {
             icon: 'card',
             label: 'Novo Card',
-            onPress: () => console.log('Pressed notifications'),
+            onPress: () => navigation.navigate('NewCard'),
           },
           {
             icon: 'pen',
             label: 'Nova anotação básica',
-            onPress: () => console.log('Pressed notifications'),
+            onPress: () => navigation.navigate('NewAnnotation'),
           },
         ]}
         onStateChange={onStateChange}
@@ -91,6 +94,25 @@ const styles = new StyleSheet.create({
   nullWarnTextSec: {
     fontSize: 15,
     color: Colors.color.gray,
+  },
+  itemsContainer: {
+    padding: 40,
+    backgroundColor: Colors.color.fulldark,
+    borderRadius: 40,
+    margin: 10,
+  },
+  itemsTitle: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  itemsDesc: {
+    fontSize: 20,
+    marginVertical: 20,
+  },
+  itemsValue: {
+    fontSize: 30,
+    fontWeight: 'bold',
   },
 });
 
