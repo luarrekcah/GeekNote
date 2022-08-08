@@ -25,19 +25,31 @@ const Card = ({route, navigation}) => {
     setRefreshing(true);
     if (AsyncStorage.getItem('cards')) {
       AsyncStorage.getItem('cards').then(data => {
-        const cardAc = data.find(item => item.id === card.id);
+        const dba = JSON.parse(data);
+        const cardAc = dba.find(item => item.id === card.id);
         setCardNow(cardAc);
       });
+    } else {
+      setCardNow(null);
     }
     wait(2000).then(() => setRefreshing(false));
   }, [card.id]);
+
+  const getValue = item => {
+    let values = 0;
+    item.items.forEach((itemIn, i) => {
+      values += itemIn.value.replace(',', '.') / 1;
+      console.log(itemIn);
+    });
+    return values.toString().replace('.', ',');
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.itemsContainer}>
         <Text style={styles.itemsTitle}>{card.title}</Text>
         <Text style={styles.itemsDesc}>{card.description}</Text>
-        <Text style={styles.itemsValue}>R$000</Text>
+        <Text style={styles.itemsValue}>R${getValue(card)}</Text>
       </View>
       <View style={styles.container}>
         {card.items.length !== 0 ? (
