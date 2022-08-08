@@ -94,15 +94,18 @@ const Home = ({navigation}) => {
       <FAB.Group
         open={open}
         icon={open ? 'close' : 'pen'}
+        backgroundColor={Colors.color.primary}
         actions={[
           {
             icon: 'card',
             label: 'Novo Card',
+            style: {backgroundColor: Colors.color.primary},
             onPress: () => navigation.navigate('NewCard'),
           },
           {
             icon: 'pen',
             label: 'Nova anotação básica',
+            style: {backgroundColor: Colors.color.primary},
             onPress: () => navigation.navigate('NewAnnotation'),
           },
         ]}
@@ -115,12 +118,6 @@ const Home = ({navigation}) => {
 const styles = new StyleSheet.create({
   container: {
     flex: 1,
-  },
-  fab: {
-    position: 'absolute',
-    margin: 16,
-    right: 0,
-    bottom: 0,
   },
   nullWarn: {
     flex: 1,
