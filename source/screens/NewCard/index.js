@@ -74,7 +74,7 @@ const NewCard = ({navigation}) => {
         <Text
           style={styles.cancelButton}
           onPress={() => {
-            navigation.goBack();
+            navigation.goBack({reload: true});
           }}>
           Cancelar
         </Text>

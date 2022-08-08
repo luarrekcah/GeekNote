@@ -11,41 +11,33 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FAB, List} from 'react-native-paper';
 import Colors from '../../../../Global/colorScheme';
 
-const Home = ({navigation}) => {
+const Home = ({route, navigation}) => {
   const [cards, setCards] = useState([]);
-  const [state, setState] = useState({open: false});
   const [refreshing, setRefreshing] = React.useState(false);
+
+  const loadData = () => {
+    if (AsyncStorage.getItem('cards')) {
+      AsyncStorage.getItem('cards').then(data => {
+        const dba = JSON.parse(data);
+        setCards(dba);
+      });
+    } else {
+      setCards(null);
+    }
+  };
 
   const wait = timeout => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   };
 
-  const onStateChange = ({open}) => setState({open});
-
-  const {open} = state;
-
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    if (AsyncStorage.getItem('cards')) {
-      AsyncStorage.getItem('cards').then(data => {
-        const dba = JSON.parse(data);
-        setCards(dba);
-      });
-    } else {
-      setCards(null);
-    }
+    loadData();
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
   useEffect(() => {
-    if (AsyncStorage.getItem('cards')) {
-      AsyncStorage.getItem('cards').then(data => {
-        const dba = JSON.parse(data);
-        setCards(dba);
-      });
-    } else {
-      setCards(null);
-    }
+    loadData();
   }, []);
 
   const openCard = cardId => {
@@ -91,25 +83,10 @@ const Home = ({navigation}) => {
           />
         </List.Section>
       )}
-      <FAB.Group
-        open={open}
-        icon={open ? 'close' : 'pen'}
-        backgroundColor={Colors.color.primary}
-        actions={[
-          {
-            icon: 'card',
-            label: 'Novo Card',
-            style: {backgroundColor: Colors.color.primary},
-            onPress: () => navigation.navigate('NewCard'),
-          },
-          {
-            icon: 'pen',
-            label: 'Nova anotação básica',
-            style: {backgroundColor: Colors.color.primary},
-            onPress: () => navigation.navigate('NewAnnotation'),
-          },
-        ]}
-        onStateChange={onStateChange}
+      <FAB
+        icon="plus"
+        style={styles.fab}
+        onPress={() => navigation.navigate('NewCard')}
       />
     </View>
   );
@@ -118,6 +95,13 @@ const Home = ({navigation}) => {
 const styles = new StyleSheet.create({
   container: {
     flex: 1,
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
+    backgroundColor: Colors.color.primary,
   },
   nullWarn: {
     flex: 1,
