@@ -9,13 +9,14 @@ import {
   Linking,
 } from 'react-native';
 import Colors from '../../Global/colorScheme';
-import {List, FAB, Button, Divider} from 'react-native-paper';
+import {FAB} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const Card = ({route, navigation}) => {
   const {card} = route.params;
 
+  const [allCards, setAllCards] = React.useState([]);
   const [cardNow, setCardNow] = React.useState(card);
   const [refreshing, setRefreshing] = React.useState(false);
 
@@ -57,8 +58,17 @@ const Card = ({route, navigation}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const deleteItem = item => {
-    console.log(item);
+  const deleteItem = async itemId => {
+    //let newAllCards = [];
+    const newItems = cardNow.items.filter(item => item.id !== itemId);
+    cardNow.items = newItems;
+    setCardNow(cardNow);
+    allCards.push(cardNow);
+    //newAllCards += allCards;
+    console.log(allCards);
+    await AsyncStorage.setItem('cards', JSON.stringify(allCards));
+    setAllCards(allCards);
+    loadData();
   };
 
   return (
