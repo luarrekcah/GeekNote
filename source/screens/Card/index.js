@@ -72,7 +72,7 @@ const Card = ({route, navigation}) => {
         <FAB
           icon="plus"
           style={styles.fab}
-          onPress={() => navigation.navigate('NewItem')}
+          onPress={() => navigation.navigate('NewItem', {card: card})}
         />
       </View>
     </View>

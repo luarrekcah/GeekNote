@@ -1,28 +1,27 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import Colors from '../../Global/colorScheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const NewItem = ({navigation}) => {
+const NewItem = ({route, navigation}) => {
+  const [allCards, setAllCards] = useState([]);
   const [items, setItems] = useState([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [link, setLink] = useState('');
   const [value, setValue] = useState('');
-  /*
+
+  const {card} = route.params;
+
   useEffect(() => {
     AsyncStorage.getItem('cards').then(data => {
       if (data) {
         const cards = JSON.parse(data);
-        pegar o card pelo id
-        pegar os items
-        setar items.
-        setItems(items);
+        setAllCards(cards);
       }
     });
   }, []);
-*/
 
   const isValid = () => {
     if (title !== undefined && title !== '') {
@@ -32,7 +31,7 @@ const NewItem = ({navigation}) => {
   };
 
   const saveData = async () => {
-    /*if (isValid()) {
+    if (isValid()) {
       const id = Math.random(5000).toString();
       const data = {
         id,
@@ -41,11 +40,15 @@ const NewItem = ({navigation}) => {
         link,
         value,
       };
-      items.push(data);
-
-      await AsyncStorage.setItem('cards', JSON.stringify(cards));
+      let newAllCards = [];
+      const cardActually = allCards.find(item => item.id === card.id);
+      cardActually.items.push(data);
+      newAllCards.push(cardActually);
+      newAllCards += allCards.filter(item => item.id !== card.id);
+      setAllCards(newAllCards);
+      await AsyncStorage.setItem('cards', JSON.stringify(allCards));
       navigation.goBack();
-    }*/
+    }
   };
 
   return (
