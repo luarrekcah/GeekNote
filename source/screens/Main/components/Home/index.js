@@ -75,11 +75,6 @@ const Home = ({navigation}) => {
         </View>
       ) : (
         <List.Section>
-          <Searchbar
-            placeholder="Search"
-            onChangeText={onChangeSearch}
-            value={searchQuery}
-          />
           <FlatList
             data={cards}
             keyExtractor={item => item.id}
