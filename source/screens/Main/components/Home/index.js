@@ -32,7 +32,6 @@ const Home = ({navigation}) => {
       AsyncStorage.getItem('cards').then(data => {
         const dba = JSON.parse(data);
         setCards(dba);
-        console.log(dba);
       });
     } else {
       setCards(null);
@@ -45,7 +44,6 @@ const Home = ({navigation}) => {
       AsyncStorage.getItem('cards').then(data => {
         const dba = JSON.parse(data);
         setCards(dba);
-        console.log(dba);
       });
     } else {
       setCards(null);
@@ -55,6 +53,15 @@ const Home = ({navigation}) => {
   const openCard = cardId => {
     const card = cards.find(item => item.id === cardId);
     navigation.navigate('Card', {card: card});
+  };
+
+  const getValue = item => {
+    let values = 0;
+    item.items.forEach((itemIn, i) => {
+      values += itemIn.value.replace(',', '.') / 1;
+      console.log(itemIn);
+    });
+    return values.toString().replace('.', ',');
   };
 
   return (
@@ -84,7 +91,7 @@ const Home = ({navigation}) => {
                 <View style={styles.itemsContainer}>
                   <Text style={styles.itemsTitle}>{item.title}</Text>
                   <Text style={styles.itemsDesc}>{item.description}</Text>
-                  <Text style={styles.itemsValue}>R$000,00</Text>
+                  <Text style={styles.itemsValue}>R${getValue(item)}</Text>
                 </View>
               </TouchableOpacity>
             )}

@@ -54,7 +54,7 @@ const Card = ({route, navigation}) => {
                     <List.Item
                       title={item.title}
                       description={item.description}
-                      left={props => <List.Icon {...props} icon="folder" />}
+                      left={props => <List.Icon {...props} icon="pen" />}
                     />
                   </Text>
                 </View>
