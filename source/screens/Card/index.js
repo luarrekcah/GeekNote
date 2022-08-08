@@ -30,7 +30,7 @@ const Card = ({route, navigation}) => {
         setCardNow(cardAc);
       });
     } else {
-      setCardNow(null);
+      setRefreshing(false);
     }
     wait(2000).then(() => setRefreshing(false));
   }, [card.id]);
