@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   FlatList,
@@ -21,20 +21,6 @@ const Card = ({route, navigation}) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   };
 
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    if (AsyncStorage.getItem('cards')) {
-      AsyncStorage.getItem('cards').then(data => {
-        const dba = JSON.parse(data);
-        const cardAc = dba.find(item => item.id === card.id);
-        setCardNow(cardAc);
-      });
-    } else {
-      setRefreshing(false);
-    }
-    wait(2000).then(() => setRefreshing(false));
-  }, [card.id]);
-
   const getValue = item => {
     let values = 0;
     item.items.forEach((itemIn, i) => {
@@ -43,6 +29,31 @@ const Card = ({route, navigation}) => {
     });
     return values.toString().replace('.', ',');
   };
+
+  const loadData = () => {
+    if (AsyncStorage.getItem('cards')) {
+      AsyncStorage.getItem('cards').then(data => {
+        const dba = JSON.parse(data);
+        const cardAc = dba.find(item => item.id === card.id);
+        setCardNow(cardAc);
+      });
+    }
+  };
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      loadData();
+    });
+    return unsubscribe;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigation]);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    loadData();
+    wait(2000).then(() => setRefreshing(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <View style={styles.container}>

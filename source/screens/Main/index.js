@@ -15,7 +15,7 @@ const Main = ({navigation}) => {
         headerShown: false,
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
-          if (route.name === 'Cards') {
+          if (route.name === 'Home') {
             iconName = focused ? 'apps' : 'apps-outline';
           } else if (route.name === 'Config') {
             iconName = focused ? 'options' : 'options-outline';
@@ -26,7 +26,7 @@ const Main = ({navigation}) => {
         tabBarInactiveTintColor: 'gray',
       })}
       initialRouteName="Home">
-      <Tab.Screen name="Cards" component={Home} />
+      <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Config" component={Config} />
     </Tab.Navigator>
   );

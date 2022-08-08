@@ -11,7 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FAB, List} from 'react-native-paper';
 import Colors from '../../../../Global/colorScheme';
 
-const Home = ({route, navigation}) => {
+const Home = ({navigation}) => {
   const [cards, setCards] = useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
 
@@ -37,8 +37,11 @@ const Home = ({route, navigation}) => {
   }, []);
 
   useEffect(() => {
-    loadData();
-  }, []);
+    const unsubscribe = navigation.addListener('focus', () => {
+      loadData();
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   const openCard = cardId => {
     const card = cards.find(item => item.id === cardId);
