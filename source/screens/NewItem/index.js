@@ -6,7 +6,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const NewItem = ({route, navigation}) => {
   const [allCards, setAllCards] = useState([]);
-  const [items, setItems] = useState([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [link, setLink] = useState('');
