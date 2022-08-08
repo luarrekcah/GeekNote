@@ -13,15 +13,6 @@ const Config = () => {
   return (
     <View style={styles.container}>
       <List.Section>
-        <List.Subheader>Desenvolvimento</List.Subheader>
-        <List.Item
-          title="Doar"
-          left={() => (
-            <List.Icon color={Colors.color.primary} icon="piggy-bank" />
-          )}
-        />
-      </List.Section>
-      <List.Section>
         <List.Subheader>Usuário</List.Subheader>
         <List.Item
           title="Excluir dados"
@@ -54,6 +45,12 @@ const Config = () => {
         <List.Item
           title="Relatar problema"
           left={() => <List.Icon color={Colors.color.primary} icon="bug" />}
+        />
+        <List.Item
+          title="Doar"
+          left={() => (
+            <List.Icon color={Colors.color.primary} icon="piggy-bank" />
+          )}
         />
         <List.Item
           title="Versão"
