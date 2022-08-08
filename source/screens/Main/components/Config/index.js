@@ -60,7 +60,7 @@ const Config = () => {
         />
         <List.Item
           title="Versão"
-          description="1.0.0 BETA"
+          description="1.2.7 ALPHA"
           left={() => <List.Icon color={Colors.color.primary} icon="android" />}
           onPress={() => {
             Linking.openURL('https://geeknote.devluar.com/updates');

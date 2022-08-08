@@ -6,10 +6,12 @@ import {
   TouchableOpacity,
   RefreshControl,
   StyleSheet,
+  Linking,
 } from 'react-native';
 import Colors from '../../Global/colorScheme';
-import {List, FAB} from 'react-native-paper';
+import {List, FAB, Button, Divider} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const Card = ({route, navigation}) => {
   const {card} = route.params;
@@ -55,6 +57,10 @@ const Card = ({route, navigation}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const deleteItem = item => {
+    console.log(item);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.itemsContainer}>
@@ -72,14 +78,28 @@ const Card = ({route, navigation}) => {
             }
             renderItem={({item}) => (
               <TouchableOpacity>
-                <View>
-                  <Text>
-                    <List.Item
-                      title={item.title}
-                      description={item.description}
-                      left={props => <List.Icon {...props} icon="pen" />}
-                    />
-                  </Text>
+                <View style={styles.containerItem}>
+                  <View style={styles.topItem}>
+                    <Text style={styles.titleItem}>{item.title}</Text>
+                    <Text style={styles.descItem}>{item.description}</Text>
+                    <Text style={styles.titleItem}>R${item.value}</Text>
+                  </View>
+                  <View style={styles.bottomItem}>
+                    <TouchableOpacity
+                      style={styles.buttonItem}
+                      onPress={() => {
+                        Linking.openURL(item.link);
+                      }}>
+                      <Icon name="link" size={30} color="#fff" />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.buttonItem}
+                      onPress={() => {
+                        deleteItem(item.id);
+                      }}>
+                      <Icon name="delete" size={30} color="#fff" />
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </TouchableOpacity>
             )}
@@ -112,6 +132,35 @@ const styles = new StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: Colors.color.primary,
+  },
+  containerItem: {
+    flex: 1,
+    flexDirection: 'row',
+    margin: 5,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: Colors.color.card.background,
+  },
+  topItem: {
+    flex: 3,
+    alignSelf: 'space-between',
+  },
+  titleItem: {
+    color: Colors.color.card.text,
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  descItem: {
+    color: Colors.color.card.text,
+    fontSize: 15,
+  },
+  buttonItem: {
+    marginHorizontal: 30,
+  },
+  bottomItem: {
+    flex: 2,
+    flexDirection: 'row',
+    alignSelf: 'space-between',
   },
   nullWarn: {
     flex: 1,
