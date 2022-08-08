@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, Linking, StyleSheet} from 'react-native';
 import {List, Dialog, Paragraph, Divider, Button} from 'react-native-paper';
 import Colors from '../../../../Global/colorScheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -21,12 +21,6 @@ const Config = () => {
           )}
           onPress={showDialog}
         />
-        <List.Item
-          title="Deslogar"
-          left={() => (
-            <List.Icon color={Colors.color.primary} icon="account-remove" />
-          )}
-        />
       </List.Section>
       <List.Section>
         <List.Subheader>Sobre</List.Subheader>
@@ -35,27 +29,42 @@ const Config = () => {
           left={() => (
             <List.Icon color={Colors.color.primary} icon="information" />
           )}
+          onPress={() => {
+            Linking.openURL('https://geeknote.devluar.com/tos');
+          }}
         />
         <List.Item
           title="Política de privacidade"
           left={() => (
             <List.Icon color={Colors.color.primary} icon="information" />
           )}
+          onPress={() => {
+            Linking.openURL('https://geeknote.devluar.com/pop');
+          }}
         />
         <List.Item
           title="Relatar problema"
           left={() => <List.Icon color={Colors.color.primary} icon="bug" />}
+          onPress={() => {
+            Linking.openURL('https://wa.me/+556892402096');
+          }}
         />
         <List.Item
           title="Doar"
           left={() => (
             <List.Icon color={Colors.color.primary} icon="piggy-bank" />
           )}
+          onPress={() => {
+            Linking.openURL('https://wa.me/+556892402096');
+          }}
         />
         <List.Item
           title="Versão"
           description="1.0.0 BETA"
           left={() => <List.Icon color={Colors.color.primary} icon="android" />}
+          onPress={() => {
+            Linking.openURL('https://geeknote.devluar.com/updates');
+          }}
         />
       </List.Section>
       <Dialog visible={visible} onDismiss={hideDialog}>
