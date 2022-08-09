@@ -5,15 +5,13 @@ import Colors from '../../Global/colorScheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const NewItem = ({route, navigation}) => {
-  const {item} = route.params;
+  const {item, card} = route.params;
   const {isEdit} = route.params || false;
   const [allCards, setAllCards] = useState([]);
   const [title, setTitle] = useState(item.title || '');
   const [description, setDescription] = useState(item.description || '');
   const [link, setLink] = useState(item.link || '');
   const [value, setValue] = useState(item.value || '');
-
-  const {card} = route.params;
 
   useEffect(() => {
     AsyncStorage.getItem('cards').then(data => {
@@ -34,24 +32,20 @@ const NewItem = ({route, navigation}) => {
   const saveData = async () => {
     if (isValid()) {
       if (isEdit) {
-        /*const newItems = card.items.map(itemC => {
-          if (itemC.id === item.id) {
-            item.title = title;
-            item.description = description;
-            item.link = link;
-            item.value = value;
-          }
-          return item;
+        const newAllCards = [];
+        allCards.forEach((cardUnique, i) => {
+          cardUnique.items.forEach((it, i) => {
+            if (it.id === item.id) {
+              it.title = title;
+              it.description = description;
+              it.link = link;
+              it.value = value;
+            }
+          });
+          newAllCards.push(cardUnique);
         });
-        card.items = newItems;
-        console.log(card);
-        let newAllCards = [];
-        newAllCards.push(card);
-        newAllCards += allCards.filter(itemC => itemC.id !== card.id);
-        setAllCards(newAllCards);
-        console.log(newAllCards);
-        //await AsyncStorage.setItem('cards', JSON.stringify(newAllCards));
-        navigation.goBack();*/
+        await AsyncStorage.setItem('cards', JSON.stringify(newAllCards));
+        navigation.goBack();
       } else {
         const id = Math.random(5000).toString();
         const data = {

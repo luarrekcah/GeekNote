@@ -125,7 +125,9 @@ const Card = ({route, navigation}) => {
           />
         ) : (
           <View style={styles.nullWarn}>
-            <Text style={styles.nullWarnText}>Seja bem vindo ao card!</Text>
+            <Text style={styles.nullWarnText}>
+              Seja bem vindo ao card {cardNow.title}!
+            </Text>
             <Text style={styles.nullWarnTextSec}>
               Aqui você pode adicionar items para compor ele.
             </Text>
