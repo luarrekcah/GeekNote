@@ -4,16 +4,18 @@ import {Button, TextInput} from 'react-native-paper';
 import Colors from '../../Global/colorScheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const NewCard = ({navigation}) => {
+const NewCard = ({route, navigation}) => {
+  const {card} = route.params;
   const [cards, setCards] = useState([]);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [title, setTitle] = useState(card.title || '');
+  const [description, setDescription] = useState(card.description || '');
+  const {isEdit} = route.params || false;
 
   useEffect(() => {
     AsyncStorage.getItem('cards').then(data => {
       if (data) {
-        const card = JSON.parse(data);
-        setCards(card);
+        const cardAsync = JSON.parse(data);
+        setCards(cardAsync);
       }
     });
   }, []);
@@ -27,18 +29,37 @@ const NewCard = ({navigation}) => {
 
   const saveData = async () => {
     if (isValid()) {
-      const id = Math.random(5000).toString();
-      const data = {
-        id,
-        title,
-        description,
-        items: [],
-      };
-      cards.push(data);
-
-      await AsyncStorage.setItem('cards', JSON.stringify(cards));
-      navigation.goBack();
+      if (isEdit) {
+        let newCards = cards;
+        newCards.map(item => {
+          if (item.id === card.id) {
+            item.title = title;
+            item.description = description;
+            item.items = card.items;
+          }
+          return item;
+        });
+        await AsyncStorage.setItem('cards', JSON.stringify(newCards));
+        navigation.goBack();
+      } else {
+        const id = Math.random(5000).toString();
+        const data = {
+          id,
+          title,
+          description,
+          items: [],
+        };
+        cards.push(data);
+        await AsyncStorage.setItem('cards', JSON.stringify(cards));
+        navigation.goBack();
+      }
     }
+  };
+
+  const deleteData = async () => {
+    let newCards = cards.filter(item => item.id !== card.id);
+    await AsyncStorage.setItem('cards', JSON.stringify(newCards));
+    navigation.goBack();
   };
 
   return (
@@ -61,15 +82,24 @@ const NewCard = ({navigation}) => {
           setDescription(text);
         }}
       />
-
       <Button
         style={styles.saveButton}
         icon="send"
         mode="contained"
         onPress={() => saveData()}>
-        Adicionar
+        {isEdit ? 'Atualizar' : 'Adicionar'}
       </Button>
-
+      {isEdit ? (
+        <Button
+          style={styles.deleteButton}
+          icon="delete"
+          mode="contained"
+          onPress={() => deleteData()}>
+          Deletar
+        </Button>
+      ) : (
+        ''
+      )}
       <TouchableOpacity>
         <Text
           style={styles.cancelButton}
@@ -116,6 +146,13 @@ const styles = StyleSheet.create({
   },
   cancelButtonText: {
     color: '#95a5a6',
+  },
+  deleteButton: {
+    backgroundColor: Colors.color.gray,
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginBottom: 20,
   },
 });
 

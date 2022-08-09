@@ -10,6 +10,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FAB, List} from 'react-native-paper';
 import Colors from '../../../../Global/colorScheme';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const Home = ({navigation}) => {
   const [cards, setCards] = useState([]);
@@ -52,7 +53,6 @@ const Home = ({navigation}) => {
     let values = 0;
     item.items.forEach((itemIn, i) => {
       values += itemIn.value.replace(',', '.') / 1;
-      console.log(itemIn);
     });
     return values.toString().replace('.', ',');
   };
@@ -78,6 +78,20 @@ const Home = ({navigation}) => {
               <TouchableOpacity onPress={() => openCard(item.id)}>
                 <View style={styles.itemsContainer}>
                   <Text style={styles.itemsTitle}>{item.title}</Text>
+
+                  <View style={styles.row}>
+                    <TouchableOpacity
+                      style={styles.buttonsCardTop}
+                      onPress={() => {
+                        navigation.navigate('NewCard', {
+                          card: item,
+                          isEdit: true,
+                        });
+                      }}>
+                      <Icon name="settings" size={30} color="#fff" />
+                    </TouchableOpacity>
+                  </View>
+
                   <Text style={styles.itemsDesc}>{item.description}</Text>
                   <Text style={styles.itemsValue}>R${getValue(item)}</Text>
                 </View>
@@ -89,7 +103,9 @@ const Home = ({navigation}) => {
       <FAB
         icon="plus"
         style={styles.fab}
-        onPress={() => navigation.navigate('NewCard')}
+        onPress={() =>
+          navigation.navigate('NewCard', {card: {title: '', description: ''}})
+        }
       />
     </View>
   );
@@ -98,6 +114,11 @@ const Home = ({navigation}) => {
 const styles = new StyleSheet.create({
   container: {
     flex: 1,
+  },
+  row: {
+    flexDirection: 'row',
+    flex: 1,
+    alignSelf: 'space-between',
   },
   fab: {
     position: 'absolute',
@@ -141,6 +162,9 @@ const styles = new StyleSheet.create({
     color: Colors.color.card.text,
     fontSize: 30,
     fontWeight: 'bold',
+  },
+  buttonsCardTop: {
+    bottom: 45,
   },
 });
 

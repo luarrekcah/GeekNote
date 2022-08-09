@@ -28,7 +28,6 @@ const Card = ({route, navigation}) => {
     let values = 0;
     item.items.forEach((itemIn, i) => {
       values += itemIn.value.replace(',', '.') / 1;
-      console.log(itemIn);
     });
     return values.toString().replace('.', ',');
   };
@@ -65,7 +64,6 @@ const Card = ({route, navigation}) => {
     setCardNow(cardNow);
     allCards.push(cardNow);
     //newAllCards += allCards;
-    console.log(allCards);
     await AsyncStorage.setItem('cards', JSON.stringify(allCards));
     setAllCards(allCards);
     loadData();
