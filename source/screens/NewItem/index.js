@@ -33,8 +33,8 @@ const NewItem = ({route, navigation}) => {
     if (isValid()) {
       if (isEdit) {
         const newAllCards = [];
-        allCards.forEach((cardUnique, i) => {
-          cardUnique.items.forEach((it, i) => {
+        allCards.forEach(cardUnique => {
+          cardUnique.items.forEach(it => {
             if (it.id === item.id) {
               it.title = title;
               it.description = description;
