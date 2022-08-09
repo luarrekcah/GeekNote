@@ -5,11 +5,13 @@ import Colors from '../../Global/colorScheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const NewItem = ({route, navigation}) => {
+  const {item} = route.params;
+  const {isEdit} = route.params || false;
   const [allCards, setAllCards] = useState([]);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [link, setLink] = useState('');
-  const [value, setValue] = useState('');
+  const [title, setTitle] = useState(item.title || '');
+  const [description, setDescription] = useState(item.description || '');
+  const [link, setLink] = useState(item.link || '');
+  const [value, setValue] = useState(item.value || '');
 
   const {card} = route.params;
 
@@ -31,22 +33,43 @@ const NewItem = ({route, navigation}) => {
 
   const saveData = async () => {
     if (isValid()) {
-      const id = Math.random(5000).toString();
-      const data = {
-        id,
-        title,
-        description,
-        link,
-        value,
-      };
-      let newAllCards = [];
-      const cardActually = allCards.find(item => item.id === card.id);
-      cardActually.items.push(data);
-      newAllCards.push(cardActually);
-      newAllCards += allCards.filter(item => item.id !== card.id);
-      setAllCards(newAllCards);
-      await AsyncStorage.setItem('cards', JSON.stringify(allCards));
-      navigation.goBack();
+      if (isEdit) {
+        /*const newItems = card.items.map(itemC => {
+          if (itemC.id === item.id) {
+            item.title = title;
+            item.description = description;
+            item.link = link;
+            item.value = value;
+          }
+          return item;
+        });
+        card.items = newItems;
+        console.log(card);
+        let newAllCards = [];
+        newAllCards.push(card);
+        newAllCards += allCards.filter(itemC => itemC.id !== card.id);
+        setAllCards(newAllCards);
+        console.log(newAllCards);
+        //await AsyncStorage.setItem('cards', JSON.stringify(newAllCards));
+        navigation.goBack();*/
+      } else {
+        const id = Math.random(5000).toString();
+        const data = {
+          id,
+          title,
+          description,
+          link,
+          value,
+        };
+        let newAllCards = [];
+        const cardActually = allCards.find(itemC => itemC.id === card.id);
+        cardActually.items.push(data);
+        newAllCards.push(cardActually);
+        newAllCards += allCards.filter(itemC => itemC.id !== card.id);
+        setAllCards(newAllCards);
+        await AsyncStorage.setItem('cards', JSON.stringify(allCards));
+        navigation.goBack();
+      }
     }
   };
 
@@ -91,7 +114,7 @@ const NewItem = ({route, navigation}) => {
         icon="send"
         mode="contained"
         onPress={() => saveData()}>
-        Adicionar
+        {isEdit ? 'Atualizar' : 'Adicionar'}
       </Button>
 
       <TouchableOpacity>

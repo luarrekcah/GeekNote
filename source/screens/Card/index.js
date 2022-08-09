@@ -103,6 +103,17 @@ const Card = ({route, navigation}) => {
                     <TouchableOpacity
                       style={styles.buttonItem}
                       onPress={() => {
+                        navigation.navigate('NewItem', {
+                          item: item,
+                          card: card,
+                          isEdit: true,
+                        });
+                      }}>
+                      <Icon name="edit" size={30} color="#fff" />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.buttonItem}
+                      onPress={() => {
                         deleteItem(item.id);
                       }}>
                       <Icon name="delete" size={30} color="#fff" />
@@ -123,7 +134,12 @@ const Card = ({route, navigation}) => {
         <FAB
           icon="plus"
           style={styles.fab}
-          onPress={() => navigation.navigate('NewItem', {card: card})}
+          onPress={() =>
+            navigation.navigate('NewItem', {
+              card: card,
+              item: {title: '', description: '', link: '', value: ''},
+            })
+          }
         />
       </View>
     </View>
@@ -163,7 +179,7 @@ const styles = new StyleSheet.create({
     fontSize: 15,
   },
   buttonItem: {
-    marginHorizontal: 30,
+    marginHorizontal: 10,
   },
   bottomItem: {
     flex: 2,
