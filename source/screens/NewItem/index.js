@@ -23,7 +23,12 @@ const NewItem = ({route, navigation}) => {
   }, []);
 
   const isValid = () => {
-    if (title !== undefined && title !== '') {
+    if (
+      title !== undefined &&
+      title !== '' &&
+      link.includes('http') &&
+      (value !== '' || isNaN(value))
+    ) {
       return true;
     }
     return false;
