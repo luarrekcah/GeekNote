@@ -78,7 +78,6 @@ const Home = ({navigation}) => {
               <TouchableOpacity onPress={() => openCard(item.id)}>
                 <View style={styles.itemsContainer}>
                   <Text style={styles.itemsTitle}>{item.title}</Text>
-
                   <View style={styles.row}>
                     <TouchableOpacity
                       style={styles.buttonsCardTop}
@@ -91,7 +90,6 @@ const Home = ({navigation}) => {
                       <Icon name="settings" size={30} color="#fff" />
                     </TouchableOpacity>
                   </View>
-
                   <Text style={styles.itemsDesc}>{item.description}</Text>
                   <Text style={styles.itemsValue}>R${getValue(item)}</Text>
                 </View>
