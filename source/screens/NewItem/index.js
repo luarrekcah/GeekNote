@@ -3,6 +3,7 @@ import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import Colors from '../../Global/colorScheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import NumberFormat from 'react-number-format';
 
 const NewItem = ({route, navigation}) => {
   const {item, card} = route.params;
