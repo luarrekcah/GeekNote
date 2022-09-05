@@ -1,9 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ToastAndroid,
+} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import Colors from '../../Global/colorScheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import NumberFormat from 'react-number-format';
 
 const NewItem = ({route, navigation}) => {
   const {item, card} = route.params;
@@ -23,6 +28,10 @@ const NewItem = ({route, navigation}) => {
     });
   }, []);
 
+  const showToast = message => {
+    ToastAndroid.show(message, ToastAndroid.SHORT);
+  };
+
   const isValid = () => {
     if (
       title !== undefined &&
@@ -32,6 +41,7 @@ const NewItem = ({route, navigation}) => {
     ) {
       return true;
     }
+    showToast('Verifique os dados inseridos.');
     return false;
   };
 
@@ -77,7 +87,7 @@ const NewItem = ({route, navigation}) => {
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder="Título"
+        placeholder="Título (obrigatório)"
         value={title}
         onChangeText={text => {
           setTitle(text);
@@ -85,7 +95,7 @@ const NewItem = ({route, navigation}) => {
       />
       <TextInput
         style={styles.input}
-        placeholder="Descrição"
+        placeholder="Descrição (opcional)"
         multiline={true}
         numberOfLines={4}
         value={description}
@@ -95,7 +105,7 @@ const NewItem = ({route, navigation}) => {
       />
       <TextInput
         style={styles.input}
-        placeholder="Link"
+        placeholder="Link (obrigatório, ao menos digite 'http')"
         value={link}
         onChangeText={text => {
           setLink(text);
@@ -103,7 +113,7 @@ const NewItem = ({route, navigation}) => {
       />
       <TextInput
         style={styles.input}
-        placeholder="000,00"
+        placeholder="0000,00 (não coloque '.' para divisão de milhar)"
         value={value}
         onChangeText={text => {
           setValue(text);

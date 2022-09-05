@@ -1,5 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ToastAndroid,
+} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import Colors from '../../Global/colorScheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -20,10 +26,15 @@ const NewCard = ({route, navigation}) => {
     });
   }, []);
 
+  const showToast = message => {
+    ToastAndroid.show(message, ToastAndroid.SHORT);
+  };
+
   const isValid = () => {
     if (title !== undefined && title !== '') {
       return true;
     }
+    showToast('Verifique os dados inseridos.');
     return false;
   };
 
@@ -66,7 +77,7 @@ const NewCard = ({route, navigation}) => {
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder="Título"
+        placeholder="Título breve (obrigatório)"
         value={title}
         onChangeText={text => {
           setTitle(text);
@@ -74,7 +85,7 @@ const NewCard = ({route, navigation}) => {
       />
       <TextInput
         style={styles.input}
-        placeholder="Descrição"
+        placeholder="Descrição (opcional)"
         multiline={true}
         numberOfLines={4}
         value={description}

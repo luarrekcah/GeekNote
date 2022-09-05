@@ -82,41 +82,45 @@ const Home = ({navigation}) => {
             </Text>
           </View>
         ) : (
-          <List.Section>
+          <>
             <View style={styles.header}>
               <Text style={styles.textHeader}>Cards Total</Text>
               <View style={styles.valueHeaderBackground}>
                 <Text style={styles.valueHeader}>R${getTotal()}</Text>
               </View>
             </View>
-            <View style={{top: -100}}>
-              {cards.map(item => {
-                return (
-                  <TouchableOpacity
-                    onPress={() => openCard(item.id)}
-                    key={item.id}>
-                    <View style={styles.itemsContainer}>
-                      <Text style={styles.itemsTitle}>{item.title}</Text>
-                      <View style={styles.row}>
-                        <TouchableOpacity
-                          style={styles.buttonsCardTop}
-                          onPress={() => {
-                            navigation.navigate('NewCard', {
-                              card: item,
-                              isEdit: true,
-                            });
-                          }}>
-                          <Icon name="edit" size={30} color="#fff" />
-                        </TouchableOpacity>
+            <List.Section>
+              <View style={{top: -100}}>
+                {cards.map(item => {
+                  return (
+                    <TouchableOpacity
+                      onPress={() => openCard(item.id)}
+                      key={item.id}>
+                      <View style={styles.itemsContainer}>
+                        <Text style={styles.itemsTitle}>{item.title}</Text>
+                        <View style={styles.row}>
+                          <TouchableOpacity
+                            style={styles.buttonsCardTop}
+                            onPress={() => {
+                              navigation.navigate('NewCard', {
+                                card: item,
+                                isEdit: true,
+                              });
+                            }}>
+                            <Icon name="edit" size={30} color="#fff" />
+                          </TouchableOpacity>
+                        </View>
+                        <Text style={styles.itemsDesc}>{item.description}</Text>
+                        <Text style={styles.itemsValue}>
+                          R${getValue(item)}
+                        </Text>
                       </View>
-                      <Text style={styles.itemsDesc}>{item.description}</Text>
-                      <Text style={styles.itemsValue}>R${getValue(item)}</Text>
-                    </View>
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
-          </List.Section>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            </List.Section>
+          </>
         )}
       </ScrollView>
 
