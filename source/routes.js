@@ -12,22 +12,27 @@ const Stack = createNativeStackNavigator();
 const Routes = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Main">
+      <Stack.Navigator
+        initialRouteName="Main"
+        screenOptions={{headerShown: false}}>
         <Stack.Screen
           name="Main"
           component={Main}
-          options={{title: 'GeekNote'}}
+          //options={{title: 'GeekNote'}}
         />
         <Stack.Screen
           name="NewCard"
           component={NewCard}
-          options={{title: 'Card'}}
+          //options={{title: 'Card'}}
         />
-        <Stack.Screen name="Card" component={Card} options={{title: 'Card'}} />
+        <Stack.Screen
+          name="Card"
+          component={Card} /*options={{title: 'Card'}}*/
+        />
         <Stack.Screen
           name="NewItem"
           component={NewItem}
-          options={{title: 'Item'}}
+          //options={{title: 'Item'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
