@@ -3,9 +3,9 @@ import {
   View,
   Text,
   RefreshControl,
-  FlatList,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FAB, List} from 'react-native-paper';
@@ -57,47 +57,69 @@ const Home = ({navigation}) => {
     return values.toString().replace('.', ',');
   };
 
+  const getTotal = () => {
+    let totalValue = 0;
+    cards.forEach(item => {
+      item.items.forEach((itemIn, i) => {
+        totalValue += itemIn.value.replace(',', '.') / 1;
+      });
+    });
+    console.log(totalValue);
+    return totalValue.toString().replace('.', ',');
+  };
+
   return (
     <View style={styles.container}>
-      {cards === null || cards.length === 0 ? (
-        <View style={styles.nullWarn}>
-          <Text style={styles.nullWarnText}>Seja bem vindo ao app!</Text>
-          <Text style={styles.nullWarnTextSec}>
-            Adicione uma nota ou um card inicial
-          </Text>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
+        <View style={styles.header}>
+          <Text style={styles.textHeader}>Cards Total</Text>
+          <View style={styles.valueHeaderBackground}>
+            <Text style={styles.valueHeader}>R${getTotal()}</Text>
+          </View>
         </View>
-      ) : (
-        <List.Section>
-          <FlatList
-            data={cards}
-            keyExtractor={item => item.id}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-            renderItem={({item}) => (
-              <TouchableOpacity onPress={() => openCard(item.id)}>
-                <View style={styles.itemsContainer}>
-                  <Text style={styles.itemsTitle}>{item.title}</Text>
-                  <View style={styles.row}>
-                    <TouchableOpacity
-                      style={styles.buttonsCardTop}
-                      onPress={() => {
-                        navigation.navigate('NewCard', {
-                          card: item,
-                          isEdit: true,
-                        });
-                      }}>
-                      <Icon name="settings" size={30} color="#fff" />
-                    </TouchableOpacity>
-                  </View>
-                  <Text style={styles.itemsDesc}>{item.description}</Text>
-                  <Text style={styles.itemsValue}>R${getValue(item)}</Text>
-                </View>
-              </TouchableOpacity>
-            )}
-          />
-        </List.Section>
-      )}
+        {cards === null || cards.length === 0 ? (
+          <View style={styles.nullWarn}>
+            <Text style={styles.nullWarnText}>Seja bem vindo ao app!</Text>
+            <Text style={styles.nullWarnTextSec}>
+              Adicione uma nota ou um card inicial
+            </Text>
+          </View>
+        ) : (
+          <List.Section>
+            <View style={{top: -100}}>
+              {cards.map(item => {
+                return (
+                  <TouchableOpacity
+                    onPress={() => openCard(item.id)}
+                    key={item.id}>
+                    <View style={styles.itemsContainer}>
+                      <Text style={styles.itemsTitle}>{item.title}</Text>
+                      <View style={styles.row}>
+                        <TouchableOpacity
+                          style={styles.buttonsCardTop}
+                          onPress={() => {
+                            navigation.navigate('NewCard', {
+                              card: item,
+                              isEdit: true,
+                            });
+                          }}>
+                          <Icon name="edit" size={30} color="#fff" />
+                        </TouchableOpacity>
+                      </View>
+                      <Text style={styles.itemsDesc}>{item.description}</Text>
+                      <Text style={styles.itemsValue}>R${getValue(item)}</Text>
+                    </View>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </List.Section>
+        )}
+      </ScrollView>
+
       <FAB
         icon="plus"
         style={styles.fab}
@@ -112,6 +134,32 @@ const Home = ({navigation}) => {
 const styles = new StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#1A1A1A',
+  },
+  header: {
+    paddingTop: 10,
+    backgroundColor: '#5D38DF',
+    width: '100%',
+    height: 200,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+  },
+  textHeader: {
+    alignSelf: 'center',
+    color: 'white',
+    fontSize: 20,
+  },
+  valueHeaderBackground: {
+    alignSelf: 'center',
+    backgroundColor: Colors.color.card.background,
+    borderRadius: 20,
+    paddingHorizontal: 40,
+    paddingVertical: 5,
+  },
+  valueHeader: {
+    color: 'white',
+    fontSize: 30,
+    fontWeight: 'bold',
   },
   row: {
     flexDirection: 'row',
@@ -123,7 +171,7 @@ const styles = new StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
-    backgroundColor: Colors.color.primary,
+    backgroundColor: Colors.color.purple,
   },
   nullWarn: {
     flex: 1,

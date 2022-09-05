@@ -72,7 +72,6 @@ const Card = ({route, navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.itemsContainer}>
-        <Text style={styles.itemsTitle}>{card.title}</Text>
         <Text style={styles.itemsDesc}>{card.description}</Text>
         <Text style={styles.itemsValue}>R${getValue(card)}</Text>
       </View>
@@ -151,13 +150,14 @@ const Card = ({route, navigation}) => {
 const styles = new StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#1A1A1A',
   },
   fab: {
     position: 'absolute',
     margin: 16,
     right: 0,
     bottom: 0,
-    backgroundColor: Colors.color.primary,
+    backgroundColor: Colors.color.purple,
   },
   containerItem: {
     flex: 1,
@@ -206,14 +206,6 @@ const styles = new StyleSheet.create({
     backgroundColor: Colors.color.card.background,
     padding: 20,
     flexDirection: 'row',
-  },
-  itemsTitle: {
-    color: Colors.color.card.text,
-    fontSize: 15,
-    fontWeight: 'bold',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   itemsDesc: {
     color: Colors.color.card.text,

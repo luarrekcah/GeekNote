@@ -117,15 +117,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+    backgroundColor: '#1A1A1A',
   },
   input: {
     fontSize: 16,
-    borderBottomColor: Colors.color.primary,
     borderBottomWidth: 1,
     marginBottom: 10,
   },
   saveButton: {
-    backgroundColor: Colors.color.primary,
+    backgroundColor: Colors.color.purple,
     borderRadius: 8,
     paddingVertical: 10,
     paddingHorizontal: 20,
