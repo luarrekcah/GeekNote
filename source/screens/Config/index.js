@@ -61,7 +61,7 @@ const Config = () => {
           />
           <List.Item
             title="Versão"
-            description="2.0.0 BETA"
+            description="2.0.2 BETA"
             left={() => (
               <List.Icon color={Colors.color.purple} icon="android" />
             )}
