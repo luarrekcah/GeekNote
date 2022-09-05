@@ -74,12 +74,6 @@ const Home = ({navigation}) => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        <View style={styles.header}>
-          <Text style={styles.textHeader}>Cards Total</Text>
-          <View style={styles.valueHeaderBackground}>
-            <Text style={styles.valueHeader}>R${getTotal()}</Text>
-          </View>
-        </View>
         {cards === null || cards.length === 0 ? (
           <View style={styles.nullWarn}>
             <Text style={styles.nullWarnText}>Seja bem vindo ao app!</Text>
@@ -89,6 +83,12 @@ const Home = ({navigation}) => {
           </View>
         ) : (
           <List.Section>
+            <View style={styles.header}>
+              <Text style={styles.textHeader}>Cards Total</Text>
+              <View style={styles.valueHeaderBackground}>
+                <Text style={styles.valueHeader}>R${getTotal()}</Text>
+              </View>
+            </View>
             <View style={{top: -100}}>
               {cards.map(item => {
                 return (
@@ -177,11 +177,12 @@ const styles = new StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: '50%',
   },
   nullWarnText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: Colors.color.gray,
+    color: Colors.color.white,
   },
   nullWarnTextSec: {
     fontSize: 15,
