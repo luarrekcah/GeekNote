@@ -1,4 +1,5 @@
-import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,91 +8,78 @@ import {
   ScrollView,
   FlatList,
   Image,
+  RefreshControl,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../Global/colorScheme';
 
 const Geek = ({navigation}) => {
-  const data = [
-    {
-      kind: 'books#volume',
-      id: 'CMcdmmYLwHgC',
-      etag: 'ghQlI1IMBbI',
-      selfLink: 'https://www.googleapis.com/books/v1/volumes/CMcdmmYLwHgC',
-      volumeInfo: {
-        title: 'Tubarões no Brasil',
-        subtitle: 'guia prático de identificação',
-        authors: ['Marcelo Szpilman'],
-        publisher: 'Mauad Editora Ltda',
-        publishedDate: '2004',
-        industryIdentifiers: [
-          {
-            type: 'ISBN_10',
-            identifier: '8590069133',
-          },
-          {
-            type: 'ISBN_13',
-            identifier: '9788590069133',
-          },
-        ],
-        readingModes: {
-          text: false,
-          image: true,
-        },
-        pageCount: 160,
-        printType: 'BOOK',
-        categories: ['Sharks'],
-        averageRating: 5,
-        ratingsCount: 2,
-        maturityRating: 'NOT_MATURE',
-        allowAnonLogging: false,
-        contentVersion: '2.1.2.0.preview.1',
-        panelizationSummary: {
-          containsEpubBubbles: false,
-          containsImageBubbles: false,
-        },
-        imageLinks: {
-          smallThumbnail:
-            'http://books.google.com/books/content?id=CMcdmmYLwHgC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api',
-          thumbnail:
-            'http://books.google.com/books/content?id=CMcdmmYLwHgC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
-        },
-        language: 'pt-BR',
-        previewLink:
-          'http://books.google.com.br/books?id=CMcdmmYLwHgC&printsec=frontcover&dq=brasil&hl=&cd=1&source=gbs_api',
-        infoLink:
-          'http://books.google.com.br/books?id=CMcdmmYLwHgC&dq=brasil&hl=&source=gbs_api',
-        canonicalVolumeLink:
-          'https://books.google.com/books/about/Tubar%C3%B5es_no_Brasil.html?hl=&id=CMcdmmYLwHgC',
-      },
-      saleInfo: {
-        country: 'BR',
-        saleability: 'NOT_FOR_SALE',
-        isEbook: false,
-      },
-      accessInfo: {
-        country: 'BR',
-        viewability: 'PARTIAL',
-        embeddable: true,
-        publicDomain: false,
-        textToSpeechPermission: 'ALLOWED',
-        epub: {
-          isAvailable: false,
-        },
-        pdf: {
-          isAvailable: false,
-        },
-        webReaderLink:
-          'http://play.google.com/books/reader?id=CMcdmmYLwHgC&hl=&printsec=frontcover&source=gbs_api',
-        accessViewStatus: 'SAMPLE',
-        quoteSharingAllowed: false,
-      },
-    },
-  ];
+  const [livros, setLivros] = React.useState();
+  const [animes, setAnimes] = React.useState();
+  const [filmes, setFilmes] = React.useState();
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const wait = timeout => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  };
+
+  useEffect(() => {
+    AsyncStorage.getItem('livros').then(data => {
+      if (data) {
+        const cards = JSON.parse(data);
+        setLivros(cards);
+      }
+    });
+    AsyncStorage.getItem('animes').then(data => {
+      if (data) {
+        console.log(data);
+        const cards = JSON.parse(data);
+        setAnimes(cards);
+      }
+    });
+    AsyncStorage.getItem('filmes').then(data => {
+      if (data) {
+        const cards = JSON.parse(data);
+        setFilmes(cards);
+      }
+    });
+  }, []);
+
+  const loadData = () => {
+    AsyncStorage.getItem('livros').then(data => {
+      if (data) {
+        const cards = JSON.parse(data);
+        setLivros(cards);
+      }
+    });
+    AsyncStorage.getItem('animes').then(data => {
+      if (data) {
+        console.log(data);
+        const cards = JSON.parse(data);
+        setAnimes(cards);
+      }
+    });
+    AsyncStorage.getItem('filmes').then(data => {
+      if (data) {
+        const cards = JSON.parse(data);
+        setFilmes(cards);
+      }
+    });
+  };
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    loadData();
+    wait(2000).then(() => setRefreshing(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <View style={styles.listBar}>
           <Text style={styles.textListBar}>Meus Livros</Text>
           <TouchableOpacity
@@ -102,7 +90,7 @@ const Geek = ({navigation}) => {
           </TouchableOpacity>
         </View>
         <FlatList
-          data={data}
+          data={livros}
           keyExtractor={item => item.id}
           horizontal
           renderItem={({item}) => (
@@ -127,6 +115,23 @@ const Geek = ({navigation}) => {
             <Icon name="add" size={30} color="#fff" />
           </TouchableOpacity>
         </View>
+        <FlatList
+          data={animes}
+          keyExtractor={item => item.id}
+          horizontal
+          renderItem={({item}) => (
+            <TouchableOpacity>
+              <View style={styles.card}>
+                <Image
+                  style={styles.stretch}
+                  source={{
+                    uri: item.attributes.posterImage.original,
+                  }}
+                />
+              </View>
+            </TouchableOpacity>
+          )}
+        />
         <View style={styles.listBar}>
           <Text style={styles.textListBar}>Meus Filmes/Séries</Text>
           <TouchableOpacity

@@ -4,7 +4,7 @@ import {View, Text, StyleSheet} from 'react-native';
 const Diary = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <Text>Em breve</Text>
+      <Text>Em breve na v5</Text>
     </View>
   );
 };

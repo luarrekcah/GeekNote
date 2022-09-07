@@ -4,7 +4,7 @@ import {View, Text, StyleSheet} from 'react-native';
 const Notes = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <Text>Em breve</Text>
+      <Text>Em breve na v4</Text>
     </View>
   );
 };

@@ -10,6 +10,7 @@ import {
 import {Button, Searchbar} from 'react-native-paper';
 import Colors from '../../Global/colorScheme';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const NewGeek = ({navigation, route}) => {
   const {type} = route.params;
@@ -90,7 +91,19 @@ const NewGeek = ({navigation, route}) => {
           keyExtractor={item => '_' + item.id}
           numColumns={2}
           renderItem={({item}) => (
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={async () => {
+                AsyncStorage.getItem('animes').then(async res => {
+                  console.log(res);
+                  const allAnimes = JSON.parse(res) || [];
+                  allAnimes.push(item);
+                  await AsyncStorage.setItem(
+                    'animes',
+                    JSON.stringify(allAnimes),
+                  );
+                });
+                navigation.goBack();
+              }}>
               <View style={styles.card}>
                 <Image
                   style={styles.stretch}
