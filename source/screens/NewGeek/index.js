@@ -20,16 +20,13 @@ const NewGeek = ({navigation, route}) => {
   const search = () => {
     switch (type) {
       case 'livro':
-        axios({
-          method: 'get',
-          url: `https://www.googleapis.com/books/v1/volumes?q=${searchQuery}`,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }).then(response => {
-          setData(response.items);
-          console.log(response._response);
-        });
+        fetch(
+          `https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&key=AIzaSyDxaJ8eShgOJW0_nQ-AV6XJZmiue__eGW8`,
+        )
+          .then(response => response.json())
+          .then(result => {
+            setData(result.items);
+          });
         break;
       case 'anime':
         axios({
@@ -43,16 +40,14 @@ const NewGeek = ({navigation, route}) => {
         });
         break;
       case 'filme':
-        axios({
-          method: 'get',
-          url: `http://www.omdbapi.com/?t=${searchQuery}&plot=full`,
-          params: {
-            token:
-              '03ANYolqsFZ-6M5Vmu9jMtGzwrXtpOiyOBG5GKkrkiCAhCTT4wLqSd3mMTJlx45vzhLdgebGaBpbZzgQNjktxj0pFtsga8DeWFJDJPBidlbjaQWyV_IARUD3idCYHvoa_Le3pAp34WR2UEokw0NCw2njF6KVX8xUeirPO1WbCJP3daT5WPqpLxy1fNDba5DROgC-S_Kb7-xYVGAuuMxpPsIDZ35-YRK4g8YHwXMO10-O5vlMYv0YqlnOsu_NHE5DPieQAb_ZeAv9uLKcS4SwlwJfWFEwcTvAeW6cIXftq5E2UWZG8veUphROyMJh7UpIfcZIVaPpl8QAvviHHep26UtpnZMTeWnEHVtMnLwuqusM8UJwR6k6lTOwIK2f1zb0jP_T-Pdtvo_1uvEFHEMfhxmprLGNAmrDc1Xele7t0zTLPWZN2mTp_81PlTbE5f0O5z-_bTdf-rcjytYr0CCiuN9Pm3YU4j7bEAgkQ21096KP3CuGVrsr7G4bnj-8-tMpPlqnx8IefGtx15',
-          },
-        }).then(response => {
-          console.log(response);
-        });
+        fetch(
+          `https://api.themoviedb.org/3/search/movie?api_key=74775892abb41dcb7869eca1a286962e&query=${searchQuery}`,
+        )
+          .then(response => response.json())
+          .then(result => {
+            console.log(result.results);
+            setData(result.results);
+          });
         break;
     }
     RenderResults(type);
@@ -71,14 +66,34 @@ const NewGeek = ({navigation, route}) => {
           keyExtractor={item => item.id}
           numColumns={2}
           renderItem={({item}) => (
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={async () => {
+                AsyncStorage.getItem('livros').then(async res => {
+                  console.log(res);
+                  const allLivros = JSON.parse(res) || [];
+                  allLivros.push(item);
+                  await AsyncStorage.setItem(
+                    'livros',
+                    JSON.stringify(allLivros),
+                  );
+                });
+                navigation.goBack();
+              }}>
               <View style={styles.card}>
                 <Image
                   style={styles.stretch}
                   source={{
-                    uri: item.volumeInfo.imageLinks.thumbnail,
+                    uri:
+                      item.volumeInfo.imageLinks === undefined
+                        ? 'https://d1pkzhm5uq4mnt.cloudfront.net/imagens/livro_sem_capa_120814.png'
+                        : item.volumeInfo.imageLinks.thumbnail,
                   }}
                 />
+                <Text style={styles.text}>
+                  {item.volumeInfo.title.slice(0, 22) +
+                    '\n' +
+                    item.volumeInfo.title.slice(22, 44)}
+                </Text>
               </View>
             </TouchableOpacity>
           )}
@@ -127,14 +142,29 @@ const NewGeek = ({navigation, route}) => {
           data={data}
           keyExtractor={item => item.id}
           renderItem={({item}) => (
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={async () => {
+                AsyncStorage.getItem('filmes').then(async res => {
+                  console.log(res);
+                  const allFilmes = JSON.parse(res) || [];
+                  allFilmes.push(item);
+                  await AsyncStorage.setItem(
+                    'filmes',
+                    JSON.stringify(allFilmes),
+                  );
+                });
+                navigation.goBack();
+              }}>
               <View style={styles.card}>
                 <Image
                   style={styles.stretch}
                   source={{
-                    uri: item.volumeInfo.imageLinks.thumbnail,
+                    uri: `https://www.themoviedb.org/t/p/w600_and_h900_bestv2${item.poster_path}`,
                   }}
                 />
+                <Text style={styles.text}>
+                  {item.title.slice(0, 22) + '\n' + item.title.slice(22, 44)}
+                </Text>
               </View>
             </TouchableOpacity>
           )}

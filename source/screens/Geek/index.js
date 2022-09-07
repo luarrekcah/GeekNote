@@ -71,7 +71,6 @@ const Geek = ({navigation}) => {
     setRefreshing(true);
     loadData();
     wait(2000).then(() => setRefreshing(false));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -99,7 +98,10 @@ const Geek = ({navigation}) => {
                 <Image
                   style={styles.stretch}
                   source={{
-                    uri: item.volumeInfo.imageLinks.thumbnail,
+                    uri:
+                      item.volumeInfo.imageLinks === undefined
+                        ? 'https://d1pkzhm5uq4mnt.cloudfront.net/imagens/livro_sem_capa_120814.png'
+                        : item.volumeInfo.imageLinks.thumbnail,
                   }}
                 />
               </View>
@@ -141,6 +143,23 @@ const Geek = ({navigation}) => {
             <Icon name="add" size={30} color="#fff" />
           </TouchableOpacity>
         </View>
+        <FlatList
+          data={filmes}
+          keyExtractor={item => item.id}
+          horizontal
+          renderItem={({item}) => (
+            <TouchableOpacity>
+              <View style={styles.card}>
+                <Image
+                  style={styles.stretch}
+                  source={{
+                    uri: `https://www.themoviedb.org/t/p/w600_and_h900_bestv2${item.poster_path}`,
+                  }}
+                />
+              </View>
+            </TouchableOpacity>
+          )}
+        />
       </ScrollView>
     </View>
   );
