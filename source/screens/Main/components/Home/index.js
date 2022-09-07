@@ -64,7 +64,6 @@ const Home = ({navigation}) => {
         totalValue += itemIn.value.replace(',', '.') / 1;
       });
     });
-    console.log(totalValue);
     return totalValue.toString().replace('.', ',');
   };
 
@@ -142,7 +141,7 @@ const styles = new StyleSheet.create({
   },
   header: {
     paddingTop: 10,
-    backgroundColor: '#5D38DF',
+    backgroundColor: Colors.color.purple,
     width: '100%',
     height: 200,
     borderBottomLeftRadius: 20,

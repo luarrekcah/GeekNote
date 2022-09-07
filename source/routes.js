@@ -2,7 +2,7 @@ import React from 'react';
 import {TouchableOpacity, Linking} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
+import Colors from './Global/colorScheme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Main from './screens/Main';
@@ -25,7 +25,7 @@ const Routes = () => {
           name="Main"
           component={Main}
           options={({navigation}) => ({
-            headerStyle: {backgroundColor: '#5D38DF'},
+            headerStyle: {backgroundColor: Colors.color.purple},
             headerTransparent: false,
             headerTitle: 'GeekNote',
             headerTitleAlign: 'center',
@@ -52,7 +52,7 @@ const Routes = () => {
           name="Config"
           component={Config}
           options={({route, navigation}) => ({
-            headerStyle: {backgroundColor: '#5D38DF'},
+            headerStyle: {backgroundColor: Colors.color.purple},
             headerTransparent: false,
             headerTitle: 'Configurações',
             headerTitleAlign: 'center',
@@ -79,7 +79,7 @@ const Routes = () => {
           name="NewCard"
           component={NewCard}
           options={({route, navigation}) => ({
-            headerStyle: {backgroundColor: '#5D38DF'},
+            headerStyle: {backgroundColor: Colors.color.purple},
             headerTransparent: false,
             headerTitle:
               route.params.card.title === ''
@@ -109,7 +109,7 @@ const Routes = () => {
           name="Card"
           component={Card}
           options={({route, navigation}) => ({
-            headerStyle: {backgroundColor: '#5D38DF'},
+            headerStyle: {backgroundColor: Colors.color.purple},
             headerTransparent: false,
             headerTitle: route.params.card.title,
             headerTitleAlign: 'center',
@@ -136,7 +136,7 @@ const Routes = () => {
           name="NewItem"
           component={NewItem}
           options={({route, navigation}) => ({
-            headerStyle: {backgroundColor: '#5D38DF'},
+            headerStyle: {backgroundColor: Colors.color.purple},
             headerTransparent: false,
             headerTitle:
               route.params.item.title === ''
