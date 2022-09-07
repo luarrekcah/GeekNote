@@ -10,6 +10,7 @@ import NewCard from './screens/NewCard';
 import Card from './screens/Card';
 import NewItem from './screens/NewItem';
 import Config from './screens/Config';
+import NewGeek from './screens/NewGeek';
 
 const Stack = createNativeStackNavigator();
 
@@ -142,6 +143,33 @@ const Routes = () => {
               route.params.item.title === ''
                 ? 'Novo item'
                 : `Editando ${route.params.item.title}`,
+            headerTitleAlign: 'center',
+            headerTitleStyle: {color: 'white'},
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.goBack();
+                }}>
+                <Icon name="arrow-back" size={30} color="#fff" />
+              </TouchableOpacity>
+            ),
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL('https://geeknote.devluar.com/ajuda');
+                }}>
+                <Icon name="help" size={30} color="#fff" />
+              </TouchableOpacity>
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="NewGeek"
+          component={NewGeek}
+          options={({route, navigation}) => ({
+            headerStyle: {backgroundColor: Colors.color.purple},
+            headerTransparent: false,
+            headerTitle: 'Novo ' + route.params.type,
             headerTitleAlign: 'center',
             headerTitleStyle: {color: 'white'},
             headerLeft: () => (

@@ -94,7 +94,10 @@ const Geek = ({navigation}) => {
       <ScrollView>
         <View style={styles.listBar}>
           <Text style={styles.textListBar}>Meus Livros</Text>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('NewGeek', {type: 'livro'});
+            }}>
             <Icon name="add" size={30} color="#fff" />
           </TouchableOpacity>
         </View>
@@ -117,13 +120,19 @@ const Geek = ({navigation}) => {
         />
         <View style={styles.listBar}>
           <Text style={styles.textListBar}>Meus Animes</Text>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('NewGeek', {type: 'anime'});
+            }}>
             <Icon name="add" size={30} color="#fff" />
           </TouchableOpacity>
         </View>
         <View style={styles.listBar}>
           <Text style={styles.textListBar}>Meus Filmes/Séries</Text>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('NewGeek', {type: 'filme'});
+            }}>
             <Icon name="add" size={30} color="#fff" />
           </TouchableOpacity>
         </View>
