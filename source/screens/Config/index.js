@@ -183,6 +183,9 @@ const Config = ({navigation}) => {
           <Button
             onPress={async () => {
               await AsyncStorage.setItem('cards', JSON.stringify([]));
+              await AsyncStorage.setItem('livros', JSON.stringify([]));
+              await AsyncStorage.setItem('animes', JSON.stringify([]));
+              await AsyncStorage.setItem('filmes', JSON.stringify([]));
               hideDialog();
             }}>
             Deletar tudo
