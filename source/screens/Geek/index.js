@@ -32,7 +32,6 @@ const Geek = ({navigation}) => {
     });
     AsyncStorage.getItem('animes').then(data => {
       if (data) {
-        console.log(data);
         const cards = JSON.parse(data);
         setAnimes(cards);
       }
@@ -54,7 +53,6 @@ const Geek = ({navigation}) => {
     });
     AsyncStorage.getItem('animes').then(data => {
       if (data) {
-        console.log(data);
         const cards = JSON.parse(data);
         setAnimes(cards);
       }
@@ -93,7 +91,10 @@ const Geek = ({navigation}) => {
           keyExtractor={item => item.id}
           horizontal
           renderItem={({item}) => (
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('ViewGeek', {item: item, type: 'livro'});
+              }}>
               <View style={styles.card}>
                 <Image
                   style={styles.stretch}
@@ -122,7 +123,10 @@ const Geek = ({navigation}) => {
           keyExtractor={item => item.id}
           horizontal
           renderItem={({item}) => (
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('ViewGeek', {item: item, type: 'anime'});
+              }}>
               <View style={styles.card}>
                 <Image
                   style={styles.stretch}
@@ -148,7 +152,10 @@ const Geek = ({navigation}) => {
           keyExtractor={item => item.id}
           horizontal
           renderItem={({item}) => (
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('ViewGeek', {item: item, type: 'filme'});
+              }}>
               <View style={styles.card}>
                 <Image
                   style={styles.stretch}

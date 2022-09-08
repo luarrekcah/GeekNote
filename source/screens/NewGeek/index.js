@@ -45,7 +45,6 @@ const NewGeek = ({navigation, route}) => {
         )
           .then(response => response.json())
           .then(result => {
-            console.log(result.results);
             setData(result.results);
           });
         break;
@@ -58,7 +57,6 @@ const NewGeek = ({navigation, route}) => {
   };
 
   const RenderResults = () => {
-    console.log(type);
     if (type === 'livro') {
       return (
         <FlatList
@@ -69,7 +67,6 @@ const NewGeek = ({navigation, route}) => {
             <TouchableOpacity
               onPress={async () => {
                 AsyncStorage.getItem('livros').then(async res => {
-                  console.log(res);
                   const allLivros = JSON.parse(res) || [];
                   allLivros.push(item);
                   await AsyncStorage.setItem(
@@ -109,7 +106,6 @@ const NewGeek = ({navigation, route}) => {
             <TouchableOpacity
               onPress={async () => {
                 AsyncStorage.getItem('animes').then(async res => {
-                  console.log(res);
                   const allAnimes = JSON.parse(res) || [];
                   allAnimes.push(item);
                   await AsyncStorage.setItem(
@@ -145,7 +141,6 @@ const NewGeek = ({navigation, route}) => {
             <TouchableOpacity
               onPress={async () => {
                 AsyncStorage.getItem('filmes').then(async res => {
-                  console.log(res);
                   const allFilmes = JSON.parse(res) || [];
                   allFilmes.push(item);
                   await AsyncStorage.setItem(
