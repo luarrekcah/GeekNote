@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, ScrollView, Linking, StyleSheet} from 'react-native';
+import {
+  View,
+  ScrollView,
+  Linking,
+  StyleSheet,
+  ToastAndroid,
+} from 'react-native';
 import {List, Dialog, Paragraph, Divider, Button} from 'react-native-paper';
 import Colors from '../../Global/colorScheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -8,6 +14,7 @@ import {
   statusCodes,
   GoogleSigninButton,
 } from '@react-native-google-signin/google-signin';
+import database from '@react-native-firebase/database';
 
 const Config = ({navigation}) => {
   const {version} = require('../../../package.json');
@@ -15,7 +22,13 @@ const Config = ({navigation}) => {
   const [visible, setVisible] = React.useState(false);
 
   const [loggedIn, setloggedIn] = React.useState(false);
+
   const [user, setUser] = React.useState([]);
+
+  const [cards, setCards] = React.useState([]);
+  const [livros, setlivros] = React.useState([]);
+  const [animes, setanimes] = React.useState([]);
+  const [filmes, setfilmes] = React.useState([]);
 
   const showDialog = () => setVisible(true);
 
@@ -28,7 +41,15 @@ const Config = ({navigation}) => {
         '240509455563-i6a7vt7bpchjckd1nc8jdgv8ghdkkfb8.apps.googleusercontent.com',
       //offlineAccess: true,
     });
-  }, []);
+    const unsubscribe = navigation.addListener('focus', () => {
+      loadData();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  const showToast = message => {
+    ToastAndroid.show(message, ToastAndroid.SHORT);
+  };
 
   const getCurrentUserInfo = async () => {
     try {
@@ -74,6 +95,122 @@ const Config = ({navigation}) => {
     }
   };
 
+  const loadData = () => {
+    AsyncStorage.getItem('cards').then(data => {
+      const dba = JSON.parse(data);
+      setCards(dba);
+    });
+    AsyncStorage.getItem('livros').then(data => {
+      const dba = JSON.parse(data);
+      setlivros(dba);
+    });
+    AsyncStorage.getItem('animes').then(data => {
+      const dba = JSON.parse(data);
+      setanimes(dba);
+    });
+    AsyncStorage.getItem('filmes').then(data => {
+      const dba = JSON.parse(data);
+      setfilmes(dba);
+    });
+  };
+
+  const saveData = () => {
+    database()
+      .ref('/geeknote/users/')
+      .once('value')
+      .then(snapshot => {
+        let users = [];
+
+        if (snapshot.val() !== null) {
+          users = snapshot.val();
+        }
+
+        const checkUser = () => {
+          return users.find(item => item.email === user.userInfo.user.email);
+        };
+
+        if (checkUser(user.userInfo.user.email) !== undefined) {
+          const newUsers = users.map(item => {
+            if (item.email === user.userInfo.user.email) {
+              item.data.cards = cards;
+              item.data.geek.livros = livros;
+              item.data.geek.animes = animes;
+              item.data.geek.filmes = filmes;
+            }
+            return item;
+          });
+          database()
+            .ref('/geeknote/users/')
+            .set(newUsers)
+            .then(() => {
+              return showToast('Dados atualizados.');
+            });
+        } else {
+          users.push({
+            email: user.userInfo.user.email,
+            data: {
+              cards,
+              geek: {
+                livros,
+                animes,
+                filmes,
+              },
+              notes: '',
+              diary: '',
+            },
+          });
+          database()
+            .ref('/geeknote/users/')
+            .set(users)
+            .then(() => {
+              return showToast('Dados Salvos.');
+            });
+        }
+      });
+  };
+
+  const loadCloudData = () => {
+    database()
+      .ref('/geeknote/users/')
+      .once('value')
+      .then(async snapshot => {
+        let users = [];
+
+        if (snapshot.val() !== null) {
+          users = snapshot.val();
+        }
+
+        const checkUser = () => {
+          return users.find(item => item.email === user.userInfo.user.email);
+        };
+
+        if (checkUser(user.userInfo.user.email) !== undefined) {
+          const userCloud = checkUser(user.userInfo.user.email);
+
+          await AsyncStorage.setItem(
+            'cards',
+            JSON.stringify(userCloud.data.cards),
+          );
+          await AsyncStorage.setItem(
+            'livros',
+            JSON.stringify(userCloud.data.geek.livros),
+          );
+          await AsyncStorage.setItem(
+            'animes',
+            JSON.stringify(userCloud.data.geek.animes),
+          );
+          await AsyncStorage.setItem(
+            'filmes',
+            JSON.stringify(userCloud.data.geek.filmes),
+          );
+
+          showToast('Dados carregados da nuvem.');
+        } else {
+          showToast('Salve seus dados antes de carregar da núvem.');
+        }
+      });
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -86,10 +223,7 @@ const Config = ({navigation}) => {
                 left={() => (
                   <List.Icon color={Colors.color.purple} icon="cloud-upload" />
                 )}
-                onPress={() => {
-                  console.log('Salvar dados na conta:');
-                  console.log(user);
-                }}
+                onPress={() => saveData()}
               />
               <List.Item
                 title="Carregar dados"
@@ -99,7 +233,7 @@ const Config = ({navigation}) => {
                     icon="cloud-download"
                   />
                 )}
-                onPress={() => {}}
+                onPress={() => loadCloudData()}
               />
               <List.Item
                 title="Deslogar do Google"
@@ -111,7 +245,7 @@ const Config = ({navigation}) => {
             </>
           ) : (
             <GoogleSigninButton
-              style={{width: '100%'}}
+              style={styles.googleButton}
               size={GoogleSigninButton.Size.Wide}
               color={GoogleSigninButton.Color.Dark}
               onPress={() => {
@@ -212,6 +346,9 @@ const Config = ({navigation}) => {
 const styles = new StyleSheet.create({
   container: {
     flex: 1,
+  },
+  googleButton: {
+    width: '100%',
   },
 });
 
