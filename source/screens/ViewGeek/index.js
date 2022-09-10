@@ -2,7 +2,6 @@ import React from 'react';
 import {View, Text, StyleSheet, ScrollView, Image, Linking} from 'react-native';
 import {Button} from 'react-native-paper';
 import Colors from '../../Global/colorScheme';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const ViewGeek = ({navigation, route}) => {
   const {item, type} = route.params;
@@ -82,6 +81,34 @@ const ViewGeek = ({navigation, route}) => {
         </View>
       );
     } else {
+      return (
+        <View>
+          <View style={styles.center}>
+            <Image
+              style={styles.capa}
+              source={{
+                uri: `https://www.themoviedb.org/t/p/w600_and_h900_bestv2${item.poster_path}`,
+              }}
+            />
+          </View>
+          <View style={styles.containerTwo}>
+            <View style={styles.center}>
+              <Text style={styles.smallText}>Notas: {item.vote_average}</Text>
+              <Text style={styles.title}>{item.title}</Text>
+              <Text style={styles.smallText}>{item.original_title}</Text>
+              <Button
+                style={styles.button}
+                onPress={() => {
+                  Linking.openURL('https://www.youtube.com');
+                }}>
+                VER FILME (NÃO DISPONÍVEL)
+              </Button>
+            </View>
+            <Text style={styles.title}>Descrição</Text>
+            <Text style={styles.smallText}>{item.overview}</Text>
+          </View>
+        </View>
+      );
     }
   };
   console.log(item);
