@@ -83,44 +83,46 @@ const Card = ({route, navigation}) => {
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
-            renderItem={({item}) => (
-              <TouchableOpacity>
-                <View style={styles.containerItem}>
-                  <View style={styles.topItem}>
-                    <Text style={styles.titleItem}>{item.title}</Text>
-                    <Text style={styles.descItem}>{item.description}</Text>
-                    <Text style={styles.titleItem}>R${item.value}</Text>
+            renderItem={({item}) => {
+              return (
+                <TouchableOpacity>
+                  <View style={styles.containerItem}>
+                    <View style={styles.topItem}>
+                      <Text style={styles.titleItem}>{item.title}</Text>
+                      <Text style={styles.descItem}>{item.description}</Text>
+                      <Text style={styles.titleItem}>R${item.value}</Text>
+                    </View>
+                    <View style={styles.bottomItem}>
+                      <TouchableOpacity
+                        style={styles.buttonItem}
+                        onPress={() => {
+                          Linking.openURL(item.link);
+                        }}>
+                        <Icon name="link" size={30} color="#fff" />
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={styles.buttonItem}
+                        onPress={() => {
+                          navigation.navigate('NewItem', {
+                            item: item,
+                            card: card,
+                            isEdit: true,
+                          });
+                        }}>
+                        <Icon name="edit" size={30} color="#fff" />
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={styles.buttonItem}
+                        onPress={() => {
+                          deleteItem(item.id);
+                        }}>
+                        <Icon name="delete" size={30} color="#fff" />
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                  <View style={styles.bottomItem}>
-                    <TouchableOpacity
-                      style={styles.buttonItem}
-                      onPress={() => {
-                        Linking.openURL(item.link);
-                      }}>
-                      <Icon name="link" size={30} color="#fff" />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={styles.buttonItem}
-                      onPress={() => {
-                        navigation.navigate('NewItem', {
-                          item: item,
-                          card: card,
-                          isEdit: true,
-                        });
-                      }}>
-                      <Icon name="edit" size={30} color="#fff" />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={styles.buttonItem}
-                      onPress={() => {
-                        deleteItem(item.id);
-                      }}>
-                      <Icon name="delete" size={30} color="#fff" />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            )}
+                </TouchableOpacity>
+              );
+            }}
           />
         ) : (
           <View style={styles.nullWarn}>
@@ -181,7 +183,7 @@ const styles = new StyleSheet.create({
     fontSize: 15,
   },
   buttonItem: {
-    marginHorizontal: 10,
+    marginHorizontal: 5,
   },
   bottomItem: {
     flex: 2,

@@ -1,6 +1,13 @@
 import React, {useEffect} from 'react';
-import {View, ScrollView, Linking, StyleSheet} from 'react-native';
-import {List, Dialog, Paragraph, Divider, Button} from 'react-native-paper';
+import {View, ScrollView, Linking, StyleSheet, Text} from 'react-native';
+import {
+  List,
+  Dialog,
+  Paragraph,
+  Divider,
+  Button,
+  Switch,
+} from 'react-native-paper';
 import Colors from '../../Global/colorScheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
@@ -10,6 +17,8 @@ import {
 } from '@react-native-google-signin/google-signin';
 
 const Config = ({navigation}) => {
+  const {version} = require('../../../package.json');
+
   const [visible, setVisible] = React.useState(false);
 
   const [isSignedInn, setIsSignedIn] = React.useState(false);
@@ -17,16 +26,11 @@ const Config = ({navigation}) => {
   const showDialog = () => setVisible(true);
 
   const hideDialog = () => setVisible(false);
-  /*
-  useEffect(() => {
-
-  }, [isSignedInn]);
-  */
 
   const isSignedIn = async () => {
     const isSignedInv = await GoogleSignin.isSignedIn();
     setIsSignedIn({isLoginScreenPresented: !isSignedInv});
-    console.log(isSignedInn.isLoginScreenPresented);
+    //console.log(isSignedInn.isLoginScreenPresented);
     return isSignedInn;
   };
 
@@ -154,7 +158,7 @@ const Config = ({navigation}) => {
           />
           <List.Item
             title="Versão"
-            description="3.0.0 BETA"
+            description={version}
             left={() => (
               <List.Icon color={Colors.color.purple} icon="android" />
             )}
