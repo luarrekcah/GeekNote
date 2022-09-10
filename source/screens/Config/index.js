@@ -14,62 +14,99 @@ const Config = ({navigation}) => {
 
   const [visible, setVisible] = React.useState(false);
 
-  const [isSignedInn, setIsSignedIn] = React.useState(false);
+  const [loggedIn, setloggedIn] = React.useState(false);
+  const [user, setUser] = React.useState([]);
 
   const showDialog = () => setVisible(true);
 
   const hideDialog = () => setVisible(false);
 
-  const isSignedIn = async () => {
-    const isSignedInv = await GoogleSignin.isSignedIn();
-    setIsSignedIn({isLoginScreenPresented: !isSignedInv});
-    //console.log(isSignedInn.isLoginScreenPresented);
-    return isSignedInn;
+  React.useEffect(() => {
+    getCurrentUserInfo();
+    GoogleSignin.configure({
+      androidClientId:
+        '240509455563-i6a7vt7bpchjckd1nc8jdgv8ghdkkfb8.apps.googleusercontent.com',
+      //offlineAccess: true,
+    });
+  }, []);
+
+  const getCurrentUserInfo = async () => {
+    try {
+      const userInfo = await GoogleSignin.signInSilently();
+      setUser({userInfo});
+      setloggedIn(true);
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_REQUIRED) {
+        // user has not signed in yet
+      } else {
+        // some other error
+      }
+    }
   };
 
-  GoogleSignin.configure({
-    androidClientId:
-      '240509455563-i6a7vt7bpchjckd1nc8jdgv8ghdkkfb8.apps.googleusercontent.com',
-  });
+  const singIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      setloggedIn(true);
+      setUser({userInfo});
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (f.e. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    }
+  };
+
+  const signOut = async () => {
+    try {
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
+      setloggedIn(false);
+      setUser([]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <View style={styles.container}>
       <ScrollView>
         <List.Section>
-          <List.Subheader>
-            Usuário (Login pelo Google desativado para melhorias)
-          </List.Subheader>
-          {isSignedIn().isLoginScreenPresented === true ? (
+          <List.Subheader>Usuário</List.Subheader>
+          {loggedIn ? (
             <>
               <List.Item
                 title="Salvar dados"
                 left={() => (
-                  <List.Icon color={Colors.color.purple} icon="save" />
+                  <List.Icon color={Colors.color.purple} icon="cloud-upload" />
                 )}
-                onPress={() => {}}
+                onPress={() => {
+                  console.log('Salvar dados na conta:');
+                  console.log(user);
+                }}
               />
               <List.Item
                 title="Carregar dados"
                 left={() => (
-                  <List.Icon color={Colors.color.purple} icon="load" />
+                  <List.Icon
+                    color={Colors.color.purple}
+                    icon="cloud-download"
+                  />
                 )}
                 onPress={() => {}}
               />
               <List.Item
                 title="Deslogar do Google"
                 left={() => (
-                  <List.Icon color={Colors.color.purple} icon="google" />
+                  <List.Icon color={Colors.color.purple} icon="logout" />
                 )}
-                onPress={async () => {
-                  try {
-                    await GoogleSignin.signOut();
-                    console.log('deslogado');
-                    await AsyncStorage.setItem('user', JSON.stringify(null));
-                    navigation.goBack();
-                  } catch (error) {
-                    console.error(error);
-                  }
-                }}
+                onPress={() => signOut()}
               />
             </>
           ) : (
@@ -77,31 +114,10 @@ const Config = ({navigation}) => {
               style={{width: '100%'}}
               size={GoogleSigninButton.Size.Wide}
               color={GoogleSigninButton.Color.Dark}
-              onPress={async () => {
-                try {
-                  await GoogleSignin.hasPlayServices();
-                  const userInfo = await GoogleSignin.signIn();
-                  console.log({userInfo});
-                  await AsyncStorage.setItem(
-                    'user',
-                    JSON.stringify({userInfo}),
-                  );
-                  navigation.goBack();
-                } catch (error) {
-                  if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-                    // user cancelled the login flow
-                  } else if (error.code === statusCodes.IN_PROGRESS) {
-                    // operation (e.g. sign in) is in progress already
-                  } else if (
-                    error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE
-                  ) {
-                    // play services not available or outdated
-                  } else {
-                    // some other error happened
-                  }
-                }
+              onPress={() => {
+                singIn();
               }}
-              disabled={true}
+              disabled={false}
             />
           )}
 
