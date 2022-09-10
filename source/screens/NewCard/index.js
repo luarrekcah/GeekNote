@@ -32,9 +32,15 @@ const NewCard = ({route, navigation}) => {
 
   const isValid = () => {
     if (title !== undefined && title !== '') {
+      if (title.length > 16) {
+        showToast(
+          'Seu título é muito grande, coloque os dados adicionais na descrição.',
+        );
+        return false;
+      }
       return true;
     }
-    showToast('Verifique os dados inseridos.');
+    showToast('Seu título não pode ficar vazio.');
     return false;
   };
 
