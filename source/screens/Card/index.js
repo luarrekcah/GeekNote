@@ -183,7 +183,7 @@ const styles = new StyleSheet.create({
     fontSize: 15,
   },
   buttonItem: {
-    marginHorizontal: 5,
+    marginHorizontal: 10,
   },
   bottomItem: {
     flex: 2,
