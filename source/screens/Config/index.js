@@ -1,13 +1,6 @@
-import React, {useEffect} from 'react';
-import {View, ScrollView, Linking, StyleSheet, Text} from 'react-native';
-import {
-  List,
-  Dialog,
-  Paragraph,
-  Divider,
-  Button,
-  Switch,
-} from 'react-native-paper';
+import React from 'react';
+import {View, ScrollView, Linking, StyleSheet} from 'react-native';
+import {List, Dialog, Paragraph, Divider, Button} from 'react-native-paper';
 import Colors from '../../Global/colorScheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {

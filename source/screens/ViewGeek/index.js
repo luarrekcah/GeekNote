@@ -1,25 +1,51 @@
 import React from 'react';
-import {View, Text, StyleSheet, ScrollView, Image, Linking} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Image,
+  Linking,
+  TouchableOpacity,
+} from 'react-native';
 import {Button} from 'react-native-paper';
+import ImageView from 'react-native-image-viewing';
 import Colors from '../../Global/colorScheme';
 
 const ViewGeek = ({navigation, route}) => {
   const {item, type} = route.params;
+  const [visibleImageViewer, setIsVisibleImageViewer] = React.useState(false);
 
   const Render = () => {
     if (type === 'livro') {
       return (
         <View>
+          <ImageView
+            images={
+              item.volumeInfo.imageLinks === undefined
+                ? [
+                    {
+                      uri: 'https://d1pkzhm5uq4mnt.cloudfront.net/imagens/livro_sem_capa_120814.png',
+                    },
+                  ]
+                : [{uri: item.volumeInfo.imageLinks.thumbnail}]
+            }
+            imageIndex={0}
+            visible={visibleImageViewer}
+            onRequestClose={() => setIsVisibleImageViewer(false)}
+          />
           <View style={styles.center}>
-            <Image
-              style={styles.capa}
-              source={{
-                uri:
-                  item.volumeInfo.imageLinks === undefined
-                    ? 'https://d1pkzhm5uq4mnt.cloudfront.net/imagens/livro_sem_capa_120814.png'
-                    : item.volumeInfo.imageLinks.thumbnail,
-              }}
-            />
+            <TouchableOpacity onPress={() => setIsVisibleImageViewer(true)}>
+              <Image
+                style={styles.capa}
+                source={{
+                  uri:
+                    item.volumeInfo.imageLinks === undefined
+                      ? 'https://d1pkzhm5uq4mnt.cloudfront.net/imagens/livro_sem_capa_120814.png'
+                      : item.volumeInfo.imageLinks.thumbnail,
+                }}
+              />
+            </TouchableOpacity>
           </View>
           <View style={styles.containerTwo}>
             <View style={styles.center}>
@@ -45,13 +71,21 @@ const ViewGeek = ({navigation, route}) => {
     } else if (type === 'anime') {
       return (
         <View>
+          <ImageView
+            images={[{uri: item.attributes.posterImage.original}]}
+            imageIndex={0}
+            visible={visibleImageViewer}
+            onRequestClose={() => setIsVisibleImageViewer(false)}
+          />
           <View style={styles.center}>
-            <Image
-              style={styles.capa}
-              source={{
-                uri: item.attributes.posterImage.original,
-              }}
-            />
+            <TouchableOpacity onPress={() => setIsVisibleImageViewer(true)}>
+              <Image
+                style={styles.capa}
+                source={{
+                  uri: item.attributes.posterImage.original,
+                }}
+              />
+            </TouchableOpacity>
           </View>
           <View style={styles.containerTwo}>
             <View style={styles.center}>
@@ -83,13 +117,25 @@ const ViewGeek = ({navigation, route}) => {
     } else {
       return (
         <View>
-          <View style={styles.center}>
-            <Image
-              style={styles.capa}
-              source={{
+          <ImageView
+            images={[
+              {
                 uri: `https://www.themoviedb.org/t/p/w600_and_h900_bestv2${item.poster_path}`,
-              }}
-            />
+              },
+            ]}
+            imageIndex={0}
+            visible={visibleImageViewer}
+            onRequestClose={() => setIsVisibleImageViewer(false)}
+          />
+          <View style={styles.center}>
+            <TouchableOpacity onPress={() => setIsVisibleImageViewer(true)}>
+              <Image
+                style={styles.capa}
+                source={{
+                  uri: `https://www.themoviedb.org/t/p/w600_and_h900_bestv2${item.poster_path}`,
+                }}
+              />
+            </TouchableOpacity>
           </View>
           <View style={styles.containerTwo}>
             <View style={styles.center}>
@@ -111,7 +157,6 @@ const ViewGeek = ({navigation, route}) => {
       );
     }
   };
-  console.log(item);
   return (
     <View style={styles.container}>
       <ScrollView>
