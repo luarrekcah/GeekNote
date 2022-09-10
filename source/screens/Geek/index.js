@@ -176,6 +176,7 @@ const styles = new StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#1A1A1A',
+    padding: 10,
   },
   listBar: {
     marginVertical: 10,
