@@ -10,6 +10,7 @@ import {
   Image,
   RefreshControl,
 } from 'react-native';
+import {Button, Modal} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../Global/colorScheme';
 
@@ -18,6 +19,23 @@ const Geek = ({navigation}) => {
   const [animes, setAnimes] = React.useState();
   const [filmes, setFilmes] = React.useState();
   const [refreshing, setRefreshing] = React.useState(false);
+
+  const [modal, setmodal] = React.useState();
+
+  const [modalType, setmodalType] = React.useState();
+
+  const [visible, setVisible] = React.useState(false);
+
+  const showModal = (item, type) => {
+    setVisible(true);
+    setmodal(item);
+    setmodalType(type);
+  };
+
+  const hideModal = () => {
+    setVisible(false);
+    setmodal(undefined);
+  };
 
   const wait = timeout => {
     return new Promise(resolve => setTimeout(resolve, timeout));
@@ -65,11 +83,146 @@ const Geek = ({navigation}) => {
     });
   };
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      loadData();
+    });
+    return unsubscribe;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigation]);
+
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     loadData();
     wait(2000).then(() => setRefreshing(false));
   }, []);
+
+  const itemDelete = async type => {
+    if (type === 'livro') {
+      const newBooks = livros.filter(item => {
+        if (item.id === modal.id) {
+          return;
+        }
+        return item;
+      });
+      setLivros(newBooks);
+      hideModal();
+      await AsyncStorage.setItem('livros', JSON.stringify(newBooks));
+    } else if (type === 'anime') {
+      const newAnimes = animes.filter(item => {
+        if (item.id === modal.id) {
+          return;
+        }
+        return item;
+      });
+      setAnimes(newAnimes);
+      hideModal();
+      await AsyncStorage.setItem('animes', JSON.stringify(newAnimes));
+    } else {
+      const newFilmes = filmes.filter(item => {
+        if (item.id === modal.id) {
+          return;
+        }
+        return item;
+      });
+      setFilmes(newFilmes);
+      hideModal();
+      await AsyncStorage.setItem('filmes', JSON.stringify(newFilmes));
+    }
+  };
+
+  const RenderModal = () => {
+    if (modalType === 'livro') {
+      return (
+        <Modal
+          visible={visible}
+          onDismiss={hideModal}
+          contentContainerStyle={styles.modalStyle}>
+          {modal !== undefined ? (
+            <View>
+              <Image
+                style={styles.capaModal}
+                source={{
+                  uri:
+                    modal.volumeInfo.imageLinks === undefined
+                      ? 'https://d1pkzhm5uq4mnt.cloudfront.net/imagens/livro_sem_capa_120814.png'
+                      : modal.volumeInfo.imageLinks.thumbnail,
+                }}
+              />
+              <Text style={styles.title}>{modal.volumeInfo.title}</Text>
+              <Button
+                style={styles.deleteButton}
+                icon="trash-can"
+                onPress={() => itemDelete('livro')}
+                mode="contained">
+                DELETAR
+              </Button>
+            </View>
+          ) : (
+            ''
+          )}
+        </Modal>
+      );
+    } else if (modalType === 'anime') {
+      return (
+        <Modal
+          visible={visible}
+          onDismiss={hideModal}
+          contentContainerStyle={styles.modalStyle}>
+          {modal !== undefined ? (
+            <View>
+              <Image
+                style={styles.capaModal}
+                source={{
+                  uri: modal.attributes.posterImage.original,
+                }}
+              />
+              <Text style={styles.title}>
+                {modal.attributes.canonicalTitle}
+              </Text>
+              <Button
+                style={styles.deleteButton}
+                icon="trash-can"
+                onPress={() => itemDelete('anime')}
+                mode="contained">
+                DELETAR
+              </Button>
+            </View>
+          ) : (
+            ''
+          )}
+        </Modal>
+      );
+    } else {
+      return (
+        <Modal
+          visible={visible}
+          onDismiss={hideModal}
+          contentContainerStyle={styles.modalStyle}>
+          {modal !== undefined ? (
+            <View>
+              <Image
+                style={styles.capaModal}
+                source={{
+                  uri: `https://www.themoviedb.org/t/p/w600_and_h900_bestv2${modal.poster_path}`,
+                }}
+              />
+              <Text style={styles.title}>{modal.title}</Text>
+              <Button
+                style={styles.deleteButton}
+                icon="trash-can"
+                onPress={() => itemDelete('filme')}
+                mode="contained">
+                DELETAR
+              </Button>
+            </View>
+          ) : (
+            ''
+          )}
+        </Modal>
+      );
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -92,6 +245,9 @@ const Geek = ({navigation}) => {
           horizontal
           renderItem={({item}) => (
             <TouchableOpacity
+              onLongPress={() => {
+                showModal(item, 'livro');
+              }}
               onPress={() => {
                 navigation.navigate('ViewGeek', {item: item, type: 'livro'});
               }}>
@@ -124,6 +280,9 @@ const Geek = ({navigation}) => {
           horizontal
           renderItem={({item}) => (
             <TouchableOpacity
+              onLongPress={() => {
+                showModal(item, 'anime');
+              }}
               onPress={() => {
                 navigation.navigate('ViewGeek', {item: item, type: 'anime'});
               }}>
@@ -153,6 +312,9 @@ const Geek = ({navigation}) => {
           horizontal
           renderItem={({item}) => (
             <TouchableOpacity
+              onLongPress={() => {
+                showModal(item, 'filme');
+              }}
               onPress={() => {
                 navigation.navigate('ViewGeek', {item: item, type: 'filme'});
               }}>
@@ -168,6 +330,7 @@ const Geek = ({navigation}) => {
           )}
         />
       </ScrollView>
+      <RenderModal />
     </View>
   );
 };
@@ -201,6 +364,29 @@ const styles = new StyleSheet.create({
   stretch: {
     width: 150,
     height: 200,
+  },
+  modalStyle: {
+    backgroundColor: '#1A1A1A',
+    borderRadius: 40,
+    padding: 40,
+    margin: 20,
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: Colors.color.white,
+    alignSelf: 'center',
+    marginVertical: 10,
+  },
+  deleteButton: {
+    backgroundColor: '#78160d',
+    marginVertical: 10,
+  },
+  capaModal: {
+    width: 150,
+    height: 200,
+    alignSelf: 'center',
+    marginVertical: 10,
   },
 });
 
