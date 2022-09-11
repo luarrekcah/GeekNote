@@ -36,7 +36,7 @@ const NewItem = ({route, navigation}) => {
     if (
       title !== undefined &&
       title !== '' &&
-      link.includes('http') &&
+      link.toLowerCase().includes('http') &&
       (value !== '' || isNaN(value))
     ) {
       return true;
