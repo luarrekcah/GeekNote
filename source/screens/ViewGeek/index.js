@@ -50,8 +50,11 @@ const ViewGeek = ({navigation, route}) => {
           <View style={styles.containerTwo}>
             <View style={styles.center}>
               <Text style={styles.smallText}>
-                Categoria: {item.volumeInfo.categories.join('|')} |{' '}
-                {item.volumeInfo.pageCount} Páginas
+                Categoria:{' '}
+                {item.volumeInfo.categories !== undefined
+                  ? item.volumeInfo.categories.join('|')
+                  : 'Não informado'}{' '}
+                | {item.volumeInfo.pageCount} Páginas
               </Text>
               <Text style={styles.title}>{item.volumeInfo.title}</Text>
               <Text style={styles.smallText}>{item.volumeInfo.subtitle}</Text>
