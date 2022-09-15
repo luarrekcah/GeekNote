@@ -52,6 +52,9 @@ const NewNote = ({route, navigation}) => {
   return (
     <View style={styles.container}>
       <SafeAreaView>
+        <View>
+          <Button>Salvar</Button>
+        </View>
         <RichToolbar
           selectedButtonStyle={{
             backgroundColor: Colors.color.purple,
@@ -80,9 +83,7 @@ const NewNote = ({route, navigation}) => {
           <RichEditor
             initialHeight={Dimensions.get('window').height}
             ref={richText}
-            onChange={descriptionText => {
-              console.log('descriptionText:', descriptionText);
-            }}
+            onChange={descriptionText => setContent(descriptionText)}
           />
         </ScrollView>
       </SafeAreaView>
