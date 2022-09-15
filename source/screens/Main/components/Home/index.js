@@ -75,9 +75,11 @@ const Home = ({navigation}) => {
         }>
         {cards === null || cards.length === 0 ? (
           <View style={styles.nullWarn}>
-            <Text style={styles.nullWarnText}>Seja bem vindo ao app!</Text>
+            <Text style={styles.nullWarnText}>
+              Seja bem vindo(a) a ala cards!
+            </Text>
             <Text style={styles.nullWarnTextSec}>
-              Adicione uma nota ou um card inicial
+              Adicione um card inicial e desfrute
             </Text>
           </View>
         ) : (
