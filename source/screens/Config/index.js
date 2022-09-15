@@ -264,7 +264,18 @@ const Config = ({navigation}) => {
           />
         </List.Section>
         <List.Section>
+          <List.Subheader>Comunidade</List.Subheader>
+          <List.Item
+            title="Discord"
+            left={() => (
+              <List.Icon color={Colors.color.purple} icon="discord" />
+            )}
+            onPress={() => {
+              Linking.openURL('https://discord.gg/PxZW7d3dvb');
+            }}
+          />
           <List.Subheader>Sobre</List.Subheader>
+
           <List.Item
             title="Termos de uso"
             left={() => (
