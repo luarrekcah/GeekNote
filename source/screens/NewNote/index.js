@@ -5,10 +5,15 @@ import {
   StyleSheet,
   TouchableOpacity,
   ToastAndroid,
+  ScrollView,
+  KeyboardAvoidingView,
+  Dimensions,
 } from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import Colors from '../../Global/colorScheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {actions, RichEditor, RichToolbar} from 'react-native-pell-rich-editor';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const NewNote = ({route, navigation}) => {
   const {note} = route.params;
@@ -23,9 +28,7 @@ const NewNote = ({route, navigation}) => {
   const isValid = () => {
     if (title !== undefined && title !== '') {
       if (title.length > 16) {
-        showToast(
-          'Seu título é muito grande!',
-        );
+        showToast('Seu título é muito grande!');
         return false;
       }
       return true;
@@ -37,60 +40,52 @@ const NewNote = ({route, navigation}) => {
   const saveData = async () => {
     if (isValid()) {
       if (isEdit) {
-       //save note if is edit
+        //save note if is edit
       } else {
-        //save note 
+        //save note
       }
     }
   };
 
+  const richText = React.useRef();
+
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Título breve (obrigatório)"
-        value={title}
-        onChangeText={text => {
-          setTitle(text);
-        }}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Descrição (opcional)"
-        multiline={true}
-        numberOfLines={4}
-        value={content}
-        onChangeText={text => {
-          setContent(text);
-        }}
-      />
-      <Button
-        style={styles.saveButton}
-        icon="send"
-        mode="contained"
-        onPress={() => saveData()}>
-        {isEdit ? 'Atualizar' : 'Adicionar'}
-      </Button>
-      {isEdit ? (
-        <Button
-          style={styles.deleteButton}
-          icon="delete"
-          mode="contained"
-          onPress={() => console.log('delete')}>
-          Deletar
-        </Button>
-      ) : (
-        ''
-      )}
-      <TouchableOpacity>
-        <Text
-          style={styles.cancelButton}
-          onPress={() => {
-            navigation.goBack({reload: true});
-          }}>
-          Cancelar
-        </Text>
-      </TouchableOpacity>
+      <SafeAreaView>
+        <RichToolbar
+          selectedButtonStyle={{
+            backgroundColor: Colors.color.purple,
+          }}
+          selectedIconTint={Colors.color.white}
+          editor={richText}
+          actions={[
+            actions.insertImage,
+            actions.setBold,
+            actions.setItalic,
+            actions.setUnderline,
+            actions.heading1,
+            actions.checkboxList,
+            actions.insertLink,
+            actions.setStrikethrough,
+            actions.blockquote,
+            actions.alignCenter,
+          ]}
+          iconMap={{
+            [actions.heading1]: ({tintColor}) => (
+              <Text style={[{color: tintColor}]}>H1</Text>
+            ),
+          }}
+        />
+        <ScrollView>
+          <RichEditor
+            initialHeight={Dimensions.get('window').height}
+            ref={richText}
+            onChange={descriptionText => {
+              console.log('descriptionText:', descriptionText);
+            }}
+          />
+        </ScrollView>
+      </SafeAreaView>
     </View>
   );
 };
@@ -98,7 +93,6 @@ const NewNote = ({route, navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
     backgroundColor: '#1A1A1A',
   },
   input: {
