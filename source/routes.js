@@ -12,6 +12,7 @@ import NewItem from './screens/NewItem';
 import Config from './screens/Config';
 import NewGeek from './screens/NewGeek';
 import ViewGeek from './screens/ViewGeek';
+import NewNote from './screens/NewNote';
 
 const Stack = createNativeStackNavigator();
 
@@ -198,6 +199,33 @@ const Routes = () => {
             headerStyle: {backgroundColor: Colors.color.purple},
             headerTransparent: false,
             headerTitle: 'Detalhes',
+            headerTitleAlign: 'center',
+            headerTitleStyle: {color: 'white'},
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.goBack();
+                }}>
+                <Icon name="arrow-back" size={30} color="#fff" />
+              </TouchableOpacity>
+            ),
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL('https://geeknote.devluar.com/ajuda');
+                }}>
+                <Icon name="help" size={30} color="#fff" />
+              </TouchableOpacity>
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="NewNote"
+          component={NewNote}
+          options={({route, navigation}) => ({
+            headerStyle: {backgroundColor: Colors.color.purple},
+            headerTransparent: false,
+            headerTitle: 'Detalhes de Nota',
             headerTitleAlign: 'center',
             headerTitleStyle: {color: 'white'},
             headerLeft: () => (

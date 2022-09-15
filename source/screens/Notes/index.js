@@ -48,7 +48,7 @@ const Notes = ({navigation}) => {
         icon="plus"
         style={styles.fab}
         onPress={() =>
-          navigation.navigate('NewCard', {card: {title: '', description: ''}})
+          navigation.navigate('NewNote', {note: {title: '', content: ''}})
         }
       />
     </View>
