@@ -85,7 +85,7 @@ const Home = ({navigation}) => {
         ) : (
           <>
             <View style={styles.header}>
-              <Text style={styles.textHeader}>Cards Total</Text>
+              <Text style={styles.textHeader}>Valor Total:</Text>
               <View style={styles.valueHeaderBackground}>
                 <Text style={styles.valueHeader}>R${getTotal()}</Text>
               </View>
@@ -151,7 +151,7 @@ const styles = new StyleSheet.create({
   },
   textHeader: {
     alignSelf: 'center',
-    color: 'white',
+    color: Colors.blacktheme.card.text,
     fontSize: 20,
   },
   valueHeaderBackground: {
@@ -162,9 +162,9 @@ const styles = new StyleSheet.create({
     paddingVertical: 5,
   },
   valueHeader: {
-    color: 'white',
     fontSize: 30,
     fontWeight: 'bold',
+    color: Colors.blacktheme.card.text,
   },
   row: {
     flexDirection: 'row',

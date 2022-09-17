@@ -215,18 +215,25 @@ const Config = ({navigation}) => {
     <View style={styles.container}>
       <ScrollView>
         <List.Section>
-          <List.Subheader>Usuário</List.Subheader>
+          <List.Subheader style={{color: Colors.blacktheme.card.text}}>
+            Usuário
+          </List.Subheader>
           {loggedIn ? (
             <>
               <List.Item
                 title="Salvar dados"
+                titleStyle={{color: Colors.blacktheme.card.text}}
                 left={() => (
-                  <List.Icon color={Colors.blacktheme.primary} icon="cloud-upload" />
+                  <List.Icon
+                    color={Colors.blacktheme.primary}
+                    icon="cloud-upload"
+                  />
                 )}
                 onPress={() => saveData()}
               />
               <List.Item
                 title="Carregar dados"
+                titleStyle={{color: Colors.blacktheme.card.text}}
                 left={() => (
                   <List.Icon
                     color={Colors.blacktheme.primary}
@@ -237,6 +244,7 @@ const Config = ({navigation}) => {
               />
               <List.Item
                 title="Deslogar do Google"
+                titleStyle={{color: Colors.blacktheme.card.text}}
                 left={() => (
                   <List.Icon color={Colors.blacktheme.primary} icon="logout" />
                 )}
@@ -257,6 +265,7 @@ const Config = ({navigation}) => {
 
           <List.Item
             title="Excluir dados"
+            titleStyle={{color: Colors.blacktheme.card.text}}
             left={() => (
               <List.Icon color={Colors.blacktheme.primary} icon="trash-can" />
             )}
@@ -264,9 +273,12 @@ const Config = ({navigation}) => {
           />
         </List.Section>
         <List.Section>
-          <List.Subheader>Comunidade</List.Subheader>
+          <List.Subheader style={{color: Colors.blacktheme.card.text}}>
+            Comunidade
+          </List.Subheader>
           <List.Item
             title="Discord"
+            titleStyle={{color: Colors.blacktheme.card.text}}
             left={() => (
               <List.Icon color={Colors.blacktheme.primary} icon="discord" />
             )}
@@ -274,10 +286,13 @@ const Config = ({navigation}) => {
               Linking.openURL('https://discord.gg/PxZW7d3dvb');
             }}
           />
-          <List.Subheader>Sobre</List.Subheader>
+          <List.Subheader style={{color: Colors.blacktheme.card.text}}>
+            Sobre
+          </List.Subheader>
 
           <List.Item
             title="Termos de uso"
+            titleStyle={{color: Colors.blacktheme.card.text}}
             left={() => (
               <List.Icon color={Colors.blacktheme.primary} icon="information" />
             )}
@@ -287,6 +302,7 @@ const Config = ({navigation}) => {
           />
           <List.Item
             title="Política de privacidade"
+            titleStyle={{color: Colors.blacktheme.card.text}}
             left={() => (
               <List.Icon color={Colors.blacktheme.primary} icon="information" />
             )}
@@ -296,13 +312,17 @@ const Config = ({navigation}) => {
           />
           <List.Item
             title="Relatar problema"
-            left={() => <List.Icon color={Colors.blacktheme.primary} icon="bug" />}
+            titleStyle={{color: Colors.blacktheme.card.text}}
+            left={() => (
+              <List.Icon color={Colors.blacktheme.primary} icon="bug" />
+            )}
             onPress={() => {
               Linking.openURL('https://wa.me/+556892402096');
             }}
           />
           <List.Item
             title="Doar"
+            titleStyle={{color: Colors.blacktheme.card.text}}
             left={() => (
               <List.Icon color={Colors.blacktheme.primary} icon="piggy-bank" />
             )}
@@ -312,6 +332,7 @@ const Config = ({navigation}) => {
           />
           <List.Item
             title="Versão"
+            titleStyle={{color: Colors.blacktheme.card.text}}
             description={version}
             left={() => (
               <List.Icon color={Colors.blacktheme.primary} icon="android" />
@@ -357,6 +378,7 @@ const Config = ({navigation}) => {
 const styles = new StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.blacktheme.backgroundColor,
   },
   googleButton: {
     width: '100%',

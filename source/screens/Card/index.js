@@ -98,7 +98,11 @@ const Card = ({route, navigation}) => {
                         onPress={() => {
                           Linking.openURL(item.link);
                         }}>
-                        <Icon name="link" size={30} color="#fff" />
+                        <Icon
+                          name="link"
+                          size={30}
+                          color={Colors.blacktheme.card.text}
+                        />
                       </TouchableOpacity>
                       <TouchableOpacity
                         style={styles.buttonItem}
@@ -109,14 +113,22 @@ const Card = ({route, navigation}) => {
                             isEdit: true,
                           });
                         }}>
-                        <Icon name="edit" size={30} color="#fff" />
+                        <Icon
+                          name="edit"
+                          size={30}
+                          color={Colors.blacktheme.card.text}
+                        />
                       </TouchableOpacity>
                       <TouchableOpacity
                         style={styles.buttonItem}
                         onPress={() => {
                           deleteItem(item.id);
                         }}>
-                        <Icon name="delete" size={30} color="#fff" />
+                        <Icon
+                          name="delete"
+                          size={30}
+                          color={Colors.blacktheme.card.text}
+                        />
                       </TouchableOpacity>
                     </View>
                   </View>

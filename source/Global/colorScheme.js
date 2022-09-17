@@ -1,13 +1,13 @@
 const Colors = {
   blacktheme: {
-    primary: '#c27240',
+    primary: '#3766a1',
     backgroundColor: '#1A1A1A',
     fulldark: '#000000',
     white: 'white',
     gray: '#7a7a7a',
     card: {
-      background: '#4D4D4D',
-      text: '#ffffff',
+      background: '#383838',
+      text: '#bdbdbd',
     },
   },
 };
