@@ -28,7 +28,7 @@ const Routes = () => {
           name="Main"
           component={Main}
           options={({navigation}) => ({
-            headerStyle: {backgroundColor: Colors.color.purple},
+            headerStyle: {backgroundColor: Colors.blacktheme.primary},
             headerTransparent: false,
             headerTitle: 'GeekNote',
             headerTitleAlign: 'center',
@@ -55,7 +55,7 @@ const Routes = () => {
           name="Config"
           component={Config}
           options={({route, navigation}) => ({
-            headerStyle: {backgroundColor: Colors.color.purple},
+            headerStyle: {backgroundColor: Colors.blacktheme.primary},
             headerTransparent: false,
             headerTitle: 'Configurações',
             headerTitleAlign: 'center',
@@ -82,7 +82,7 @@ const Routes = () => {
           name="NewCard"
           component={NewCard}
           options={({route, navigation}) => ({
-            headerStyle: {backgroundColor: Colors.color.purple},
+            headerStyle: {backgroundColor: Colors.blacktheme.primary},
             headerTransparent: false,
             headerTitle:
               route.params.card.title === ''
@@ -112,7 +112,7 @@ const Routes = () => {
           name="Card"
           component={Card}
           options={({route, navigation}) => ({
-            headerStyle: {backgroundColor: Colors.color.purple},
+            headerStyle: {backgroundColor: Colors.blacktheme.primary},
             headerTransparent: false,
             headerTitle: route.params.card.title,
             headerTitleAlign: 'center',
@@ -139,7 +139,7 @@ const Routes = () => {
           name="NewItem"
           component={NewItem}
           options={({route, navigation}) => ({
-            headerStyle: {backgroundColor: Colors.color.purple},
+            headerStyle: {backgroundColor: Colors.blacktheme.primary},
             headerTransparent: false,
             headerTitle:
               route.params.item.title === ''
@@ -169,7 +169,7 @@ const Routes = () => {
           name="NewGeek"
           component={NewGeek}
           options={({route, navigation}) => ({
-            headerStyle: {backgroundColor: Colors.color.purple},
+            headerStyle: {backgroundColor: Colors.blacktheme.primary},
             headerTransparent: false,
             headerTitle: 'Novo ' + route.params.type,
             headerTitleAlign: 'center',
@@ -196,7 +196,7 @@ const Routes = () => {
           name="ViewGeek"
           component={ViewGeek}
           options={({route, navigation}) => ({
-            headerStyle: {backgroundColor: Colors.color.purple},
+            headerStyle: {backgroundColor: Colors.blacktheme.primary},
             headerTransparent: false,
             headerTitle: 'Detalhes',
             headerTitleAlign: 'center',
@@ -223,7 +223,7 @@ const Routes = () => {
           name="NewNote"
           component={NewNote}
           options={({route, navigation}) => ({
-            headerStyle: {backgroundColor: Colors.color.purple},
+            headerStyle: {backgroundColor: Colors.blacktheme.primary},
             headerTransparent: false,
             headerTitle: 'Detalhes de Nota',
             headerTitleAlign: 'center',

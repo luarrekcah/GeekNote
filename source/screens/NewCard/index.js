@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   saveButton: {
-    backgroundColor: Colors.color.purple,
+    backgroundColor: Colors.blacktheme.primary,
     borderRadius: 8,
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   cancelButton: {
-    color: Colors.color.gray,
+    color: Colors.blacktheme.gray,
     alignSelf: 'center',
     fontSize: 15,
     fontWeight: 'bold',
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     color: '#95a5a6',
   },
   deleteButton: {
-    backgroundColor: Colors.color.gray,
+    backgroundColor: Colors.blacktheme.gray,
     borderRadius: 8,
     paddingVertical: 10,
     paddingHorizontal: 20,

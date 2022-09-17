@@ -221,7 +221,7 @@ const Config = ({navigation}) => {
               <List.Item
                 title="Salvar dados"
                 left={() => (
-                  <List.Icon color={Colors.color.purple} icon="cloud-upload" />
+                  <List.Icon color={Colors.blacktheme.primary} icon="cloud-upload" />
                 )}
                 onPress={() => saveData()}
               />
@@ -229,7 +229,7 @@ const Config = ({navigation}) => {
                 title="Carregar dados"
                 left={() => (
                   <List.Icon
-                    color={Colors.color.purple}
+                    color={Colors.blacktheme.primary}
                     icon="cloud-download"
                   />
                 )}
@@ -238,7 +238,7 @@ const Config = ({navigation}) => {
               <List.Item
                 title="Deslogar do Google"
                 left={() => (
-                  <List.Icon color={Colors.color.purple} icon="logout" />
+                  <List.Icon color={Colors.blacktheme.primary} icon="logout" />
                 )}
                 onPress={() => signOut()}
               />
@@ -258,7 +258,7 @@ const Config = ({navigation}) => {
           <List.Item
             title="Excluir dados"
             left={() => (
-              <List.Icon color={Colors.color.purple} icon="trash-can" />
+              <List.Icon color={Colors.blacktheme.primary} icon="trash-can" />
             )}
             onPress={showDialog}
           />
@@ -268,7 +268,7 @@ const Config = ({navigation}) => {
           <List.Item
             title="Discord"
             left={() => (
-              <List.Icon color={Colors.color.purple} icon="discord" />
+              <List.Icon color={Colors.blacktheme.primary} icon="discord" />
             )}
             onPress={() => {
               Linking.openURL('https://discord.gg/PxZW7d3dvb');
@@ -279,7 +279,7 @@ const Config = ({navigation}) => {
           <List.Item
             title="Termos de uso"
             left={() => (
-              <List.Icon color={Colors.color.purple} icon="information" />
+              <List.Icon color={Colors.blacktheme.primary} icon="information" />
             )}
             onPress={() => {
               Linking.openURL('https://geeknote.devluar.com/tos');
@@ -288,7 +288,7 @@ const Config = ({navigation}) => {
           <List.Item
             title="Política de privacidade"
             left={() => (
-              <List.Icon color={Colors.color.purple} icon="information" />
+              <List.Icon color={Colors.blacktheme.primary} icon="information" />
             )}
             onPress={() => {
               Linking.openURL('https://geeknote.devluar.com/pop');
@@ -296,7 +296,7 @@ const Config = ({navigation}) => {
           />
           <List.Item
             title="Relatar problema"
-            left={() => <List.Icon color={Colors.color.purple} icon="bug" />}
+            left={() => <List.Icon color={Colors.blacktheme.primary} icon="bug" />}
             onPress={() => {
               Linking.openURL('https://wa.me/+556892402096');
             }}
@@ -304,7 +304,7 @@ const Config = ({navigation}) => {
           <List.Item
             title="Doar"
             left={() => (
-              <List.Icon color={Colors.color.purple} icon="piggy-bank" />
+              <List.Icon color={Colors.blacktheme.primary} icon="piggy-bank" />
             )}
             onPress={() => {
               Linking.openURL('https://wa.me/+556892402096');
@@ -314,7 +314,7 @@ const Config = ({navigation}) => {
             title="Versão"
             description={version}
             left={() => (
-              <List.Icon color={Colors.color.purple} icon="android" />
+              <List.Icon color={Colors.blacktheme.primary} icon="android" />
             )}
             onPress={() => {
               Linking.openURL('https://geeknote.devluar.com/updates');

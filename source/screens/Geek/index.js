@@ -350,13 +350,13 @@ const styles = new StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'space-between',
     borderRadius: 20,
-    backgroundColor: Colors.color.purple,
+    backgroundColor: Colors.blacktheme.primary,
   },
   textListBar: {
     flex: 1,
     fontWeight: 'bold',
     fontSize: 20,
-    color: Colors.color.white,
+    color: Colors.blacktheme.white,
   },
   card: {
     marginHorizontal: 10,
@@ -374,7 +374,7 @@ const styles = new StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 20,
-    color: Colors.color.white,
+    color: Colors.blacktheme.white,
     alignSelf: 'center',
     marginVertical: 10,
   },

@@ -65,7 +65,7 @@ const styles = new StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
-    backgroundColor: Colors.color.purple,
+    backgroundColor: Colors.blacktheme.primary,
   },
   nullWarn: {
     flex: 1,
@@ -76,11 +76,11 @@ const styles = new StyleSheet.create({
   nullWarnText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: Colors.color.white,
+    color: Colors.blacktheme.white,
   },
   nullWarnTextSec: {
     fontSize: 15,
-    color: Colors.color.gray,
+    color: Colors.blacktheme.gray,
   },
 });
 

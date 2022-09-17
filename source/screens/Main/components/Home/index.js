@@ -143,7 +143,7 @@ const styles = new StyleSheet.create({
   },
   header: {
     paddingTop: 10,
-    backgroundColor: Colors.color.purple,
+    backgroundColor: Colors.blacktheme.primary,
     width: '100%',
     height: 200,
     borderBottomLeftRadius: 20,
@@ -156,7 +156,7 @@ const styles = new StyleSheet.create({
   },
   valueHeaderBackground: {
     alignSelf: 'center',
-    backgroundColor: Colors.color.card.background,
+    backgroundColor: Colors.blacktheme.card.background,
     borderRadius: 20,
     paddingHorizontal: 40,
     paddingVertical: 5,
@@ -176,7 +176,7 @@ const styles = new StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
-    backgroundColor: Colors.color.purple,
+    backgroundColor: Colors.blacktheme.primary,
   },
   nullWarn: {
     flex: 1,
@@ -187,31 +187,31 @@ const styles = new StyleSheet.create({
   nullWarnText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: Colors.color.white,
+    color: Colors.blacktheme.white,
   },
   nullWarnTextSec: {
     fontSize: 15,
-    color: Colors.color.gray,
+    color: Colors.blacktheme.gray,
   },
   itemsContainer: {
     padding: 40,
-    backgroundColor: Colors.color.card.background,
+    backgroundColor: Colors.blacktheme.card.background,
     borderRadius: 40,
     margin: 10,
   },
   itemsTitle: {
-    color: Colors.color.card.text,
+    color: Colors.blacktheme.card.text,
     fontSize: 25,
     fontWeight: 'bold',
     marginBottom: 10,
   },
   itemsDesc: {
-    color: Colors.color.card.text,
+    color: Colors.blacktheme.card.text,
     fontSize: 20,
     marginVertical: 20,
   },
   itemsValue: {
-    color: Colors.color.card.text,
+    color: Colors.blacktheme.card.text,
     fontSize: 30,
     fontWeight: 'bold',
   },

@@ -189,13 +189,13 @@ const styles = new StyleSheet.create({
     backgroundColor: '#1A1A1A',
   },
   searchButton: {
-    backgroundColor: Colors.color.white,
+    backgroundColor: Colors.blacktheme.white,
     padding: 5,
     borderRadius: 20,
     margin: 5,
   },
   text: {
-    color: Colors.color.white,
+    color: Colors.blacktheme.white,
     margin: 10,
     alignSelf: 'center',
   },

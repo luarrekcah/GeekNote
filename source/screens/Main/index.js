@@ -16,7 +16,7 @@ const Main = ({navigation}) => {
     <Tab.Navigator
       screenOptions={({route}) => ({
         headerShown: false,
-        tabBarStyle: {backgroundColor: Colors.color.purple},
+        tabBarStyle: {backgroundColor: Colors.blacktheme.primary},
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
           if (route.name === 'Cards') {
@@ -30,7 +30,7 @@ const Main = ({navigation}) => {
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: Colors.color.white,
+        tabBarActiveTintColor: Colors.blacktheme.white,
         tabBarInactiveTintColor: 'gray',
       })}
       initialRouteName="Cards">

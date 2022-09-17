@@ -177,7 +177,7 @@ const styles = new StyleSheet.create({
   containerTwo: {
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    backgroundColor: Colors.color.purple,
+    backgroundColor: Colors.blacktheme.primary,
     height: '100%',
   },
   capa: {
@@ -189,7 +189,7 @@ const styles = new StyleSheet.create({
     alignItems: 'center',
   },
   smallText: {
-    color: Colors.color.white,
+    color: Colors.blacktheme.white,
     padding: 10,
     alignContent: 'center',
     textAlignVertical: 'center',
@@ -197,12 +197,12 @@ const styles = new StyleSheet.create({
   },
   title: {
     padding: 10,
-    color: Colors.color.white,
+    color: Colors.blacktheme.white,
     fontSize: 25,
     fontWeight: 'bold',
   },
   button: {
-    backgroundColor: Colors.color.white,
+    backgroundColor: Colors.blacktheme.white,
     margin: 20,
     paddingHorizontal: 60,
     borderRadius: 100,
