@@ -333,6 +333,7 @@ const Config = ({navigation}) => {
           <List.Item
             title="Versão"
             titleStyle={{color: Colors.blacktheme.card.text}}
+            descriptionStyle={{color: Colors.blacktheme.card.text}}
             description={version}
             left={() => (
               <List.Icon color={Colors.blacktheme.primary} icon="android" />
