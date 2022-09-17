@@ -1,6 +1,7 @@
 const Colors = {
   blacktheme: {
-    primary: '#5D38DF',
+    primary: '#c27240',
+    backgroundColor: '#1A1A1A',
     fulldark: '#000000',
     white: 'white',
     gray: '#7a7a7a',

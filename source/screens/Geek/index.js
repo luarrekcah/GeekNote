@@ -338,7 +338,7 @@ const Geek = ({navigation}) => {
 const styles = new StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1A1A1A',
+    backgroundColor: Colors.blacktheme.backgroundColor,
   },
   listBar: {
     marginVertical: 10,
@@ -366,7 +366,7 @@ const styles = new StyleSheet.create({
     height: 200,
   },
   modalStyle: {
-    backgroundColor: '#1A1A1A',
+    backgroundColor: Colors.blacktheme.backgroundColor,
     borderRadius: 40,
     padding: 40,
     margin: 20,

@@ -94,7 +94,7 @@ const NewNote = ({route, navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1A1A1A',
+    backgroundColor: Colors.blacktheme.backgroundColor,
   },
   input: {
     fontSize: 16,

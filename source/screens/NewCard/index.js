@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: '#1A1A1A',
+    backgroundColor: Colors.blacktheme.backgroundColor,
   },
   input: {
     fontSize: 16,

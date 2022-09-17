@@ -172,7 +172,7 @@ const ViewGeek = ({navigation, route}) => {
 const styles = new StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1A1A1A',
+    backgroundColor: Colors.blacktheme.backgroundColor,
   },
   containerTwo: {
     borderTopLeftRadius: 20,

@@ -152,7 +152,7 @@ const Card = ({route, navigation}) => {
 const styles = new StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1A1A1A',
+    backgroundColor: Colors.blacktheme.backgroundColor,
   },
   fab: {
     position: 'absolute',
