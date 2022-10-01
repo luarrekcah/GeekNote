@@ -303,6 +303,7 @@ dependencies {
         implementation jscFlavor
     }
     implementation project(':react-native-vector-icons')
+    implementation project(':react-native-linear-gradient')
 }
 
 if (isNewArchitectureEnabled()) {
