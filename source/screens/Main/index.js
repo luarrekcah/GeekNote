@@ -53,7 +53,7 @@ const Main = ({navigation}) => {
                 style={styles.iconTabRound}
                 start={{x: 0, y: 1}}
                 end={{x: 0, y: 0}}
-                colors={['#321075', '#9d80d8']}>
+                colors={Colors.blacktheme.home.homeIcon}>
                 <Icon name="home" size={26} color="#fff" />
               </LinearGradient>
             </View>
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 6,
-    shadowColor: '#9C27B0',
+    shadowColor: Colors.blacktheme.home.homeIcon[1],
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.2,
     shadowRadius: 5,

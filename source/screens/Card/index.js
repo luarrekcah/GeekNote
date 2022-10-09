@@ -117,6 +117,7 @@ const Card = ({route, navigation}) => {
                           name="edit"
                           size={30}
                           color={Colors.blacktheme.card.text}
+                          selectionColor={Colors.blacktheme.card.text}
                         />
                       </TouchableOpacity>
                       <TouchableOpacity
