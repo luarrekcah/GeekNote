@@ -11,12 +11,12 @@ const Colors = {
     },
     home: {
       homeIcon: ['#0f0f0f', '#2b2b2a'],
-      header: ['#1c1b1b', '#2b1311'],
+      header: ['#1c1b1b', '#1c1b1b'],
     },
     config: {
-      section: '',
-      text: '',
-      icon: '',
+      section: '#fff',
+      text: '#fff',
+      icon: '#fff',
     },
   },
   purpledark: {

@@ -1,9 +1,9 @@
-import React from 'react';
+import * as React from 'react';
 import {TouchableOpacity, Linking} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Colors from './Global/colorScheme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import CustomTheme from './Global/CustomTheme';
 
 import Main from './screens/Main';
 import NewCard from './screens/NewCard';
@@ -17,6 +17,7 @@ import NewNote from './screens/NewNote';
 const Stack = createNativeStackNavigator();
 
 const Routes = () => {
+  const [theme, setTheme] = React.useState(CustomTheme());
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -28,7 +29,7 @@ const Routes = () => {
           name="Main"
           component={Main}
           options={({navigation}) => ({
-            headerStyle: {backgroundColor: Colors.blacktheme.primary},
+            headerStyle: {backgroundColor: theme.primary},
             headerTransparent: false,
             headerTitle: 'GeekNote',
             headerTitleAlign: 'center',
@@ -55,7 +56,7 @@ const Routes = () => {
           name="Config"
           component={Config}
           options={({route, navigation}) => ({
-            headerStyle: {backgroundColor: Colors.blacktheme.primary},
+            headerStyle: {backgroundColor: theme.primary},
             headerTransparent: false,
             headerTitle: 'Configurações',
             headerTitleAlign: 'center',
@@ -82,7 +83,7 @@ const Routes = () => {
           name="NewCard"
           component={NewCard}
           options={({route, navigation}) => ({
-            headerStyle: {backgroundColor: Colors.blacktheme.primary},
+            headerStyle: {backgroundColor: theme.primary},
             headerTransparent: false,
             headerTitle:
               route.params.card.title === ''
@@ -112,7 +113,7 @@ const Routes = () => {
           name="Card"
           component={Card}
           options={({route, navigation}) => ({
-            headerStyle: {backgroundColor: Colors.blacktheme.primary},
+            headerStyle: {backgroundColor: theme.primary},
             headerTransparent: false,
             headerTitle: route.params.card.title,
             headerTitleAlign: 'center',
@@ -139,7 +140,7 @@ const Routes = () => {
           name="NewItem"
           component={NewItem}
           options={({route, navigation}) => ({
-            headerStyle: {backgroundColor: Colors.blacktheme.primary},
+            headerStyle: {backgroundColor: theme.primary},
             headerTransparent: false,
             headerTitle:
               route.params.item.title === ''
@@ -169,7 +170,7 @@ const Routes = () => {
           name="NewGeek"
           component={NewGeek}
           options={({route, navigation}) => ({
-            headerStyle: {backgroundColor: Colors.blacktheme.primary},
+            headerStyle: {backgroundColor: theme.primary},
             headerTransparent: false,
             headerTitle: 'Novo ' + route.params.type,
             headerTitleAlign: 'center',
@@ -196,7 +197,7 @@ const Routes = () => {
           name="ViewGeek"
           component={ViewGeek}
           options={({route, navigation}) => ({
-            headerStyle: {backgroundColor: Colors.blacktheme.primary},
+            headerStyle: {backgroundColor: theme.primary},
             headerTransparent: false,
             headerTitle: 'Detalhes',
             headerTitleAlign: 'center',
@@ -223,7 +224,7 @@ const Routes = () => {
           name="NewNote"
           component={NewNote}
           options={({route, navigation}) => ({
-            headerStyle: {backgroundColor: Colors.blacktheme.primary},
+            headerStyle: {backgroundColor: theme.primary},
             headerTransparent: false,
             headerTitle: 'Detalhes de Nota',
             headerTitleAlign: 'center',

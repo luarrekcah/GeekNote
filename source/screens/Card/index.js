@@ -8,7 +8,6 @@ import {
   StyleSheet,
   Linking,
 } from 'react-native';
-import Colors from '../../Global/colorScheme';
 import {FAB} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -16,10 +15,10 @@ import CustomTheme from '../../Global/CustomTheme';
 
 const Card = ({route, navigation}) => {
   const {card} = route.params;
-
   const [allCards, setAllCards] = React.useState([]);
   const [cardNow, setCardNow] = React.useState(card);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [theme, setTheme] = React.useState(CustomTheme());
 
   const wait = timeout => {
     return new Promise(resolve => setTimeout(resolve, timeout));
@@ -76,9 +75,17 @@ const Card = ({route, navigation}) => {
         styles.container,
         {backgroundColor: CustomTheme().backgroundColor},
       ]}>
-      <View style={styles.itemsContainer}>
-        <Text style={styles.itemsDesc}>{card.description}</Text>
-        <Text style={styles.itemsValue}>R${getValue(card)}</Text>
+      <View
+        style={[
+          styles.itemsContainer,
+          {backgroundColor: theme.card.background},
+        ]}>
+        <Text style={[styles.itemsDesc, {color: theme.card.text}]}>
+          {card.description}
+        </Text>
+        <Text style={[styles.itemsValue, {color: theme.card.text}]}>
+          R${getValue(card)}
+        </Text>
       </View>
       <View style={styles.container}>
         {card.items.length !== 0 ? (
@@ -91,11 +98,23 @@ const Card = ({route, navigation}) => {
             renderItem={({item}) => {
               return (
                 <TouchableOpacity>
-                  <View style={styles.containerItem}>
+                  <View
+                    style={[
+                      styles.containerItem,
+                      {backgroundColor: theme.card.background},
+                    ]}>
                     <View style={styles.topItem}>
-                      <Text style={styles.titleItem}>{item.title}</Text>
-                      <Text style={styles.descItem}>{item.description}</Text>
-                      <Text style={styles.titleItem}>R${item.value}</Text>
+                      <Text
+                        style={[styles.titleItem, {color: theme.card.text}]}>
+                        {item.title}
+                      </Text>
+                      <Text style={[styles.descItem, {color: theme.card.text}]}>
+                        {item.description}
+                      </Text>
+                      <Text
+                        style={[styles.titleItem, {color: theme.card.text}]}>
+                        R${item.value}
+                      </Text>
                     </View>
                     <View style={styles.bottomItem}>
                       <TouchableOpacity
@@ -103,11 +122,7 @@ const Card = ({route, navigation}) => {
                         onPress={() => {
                           Linking.openURL(item.link);
                         }}>
-                        <Icon
-                          name="link"
-                          size={30}
-                          color={Colors.blacktheme.card.text}
-                        />
+                        <Icon name="link" size={30} color={theme.card.text} />
                       </TouchableOpacity>
                       <TouchableOpacity
                         style={styles.buttonItem}
@@ -121,8 +136,8 @@ const Card = ({route, navigation}) => {
                         <Icon
                           name="edit"
                           size={30}
-                          color={Colors.blacktheme.card.text}
-                          selectionColor={Colors.blacktheme.card.text}
+                          color={theme.card.text}
+                          selectionColor={theme.card.text}
                         />
                       </TouchableOpacity>
                       <TouchableOpacity
@@ -130,11 +145,7 @@ const Card = ({route, navigation}) => {
                         onPress={() => {
                           deleteItem(item.id);
                         }}>
-                        <Icon
-                          name="delete"
-                          size={30}
-                          color={Colors.blacktheme.card.text}
-                        />
+                        <Icon name="delete" size={30} color={theme.card.text} />
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -143,18 +154,18 @@ const Card = ({route, navigation}) => {
             }}
           />
         ) : (
-          <View style={styles.nullWarn}>
-            <Text style={styles.nullWarnText}>
+          <View style={[styles.nullWarn]}>
+            <Text style={[styles.nullWarnText, {color: theme.gray}]}>
               Seja bem vindo ao card {cardNow.title}!
             </Text>
-            <Text style={styles.nullWarnTextSec}>
+            <Text style={[styles.nullWarnTextSec, {color: theme.gray}]}>
               Aqui você pode adicionar items para compor ele.
             </Text>
           </View>
         )}
         <FAB
           icon="plus"
-          style={styles.fab}
+          style={[styles.fab, {backgroundColor: theme.primary}]}
           onPress={() =>
             navigation.navigate('NewItem', {
               card: card,
@@ -176,7 +187,6 @@ const styles = new StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
-    backgroundColor: Colors.blacktheme.primary,
   },
   containerItem: {
     flex: 1,
@@ -184,19 +194,16 @@ const styles = new StyleSheet.create({
     margin: 5,
     padding: 10,
     borderRadius: 10,
-    backgroundColor: Colors.blacktheme.card.background,
   },
   topItem: {
     flex: 3,
     alignSelf: 'space-between',
   },
   titleItem: {
-    color: Colors.blacktheme.card.text,
     fontSize: 20,
     fontWeight: 'bold',
   },
   descItem: {
-    color: Colors.blacktheme.card.text,
     fontSize: 15,
   },
   buttonItem: {
@@ -215,19 +222,15 @@ const styles = new StyleSheet.create({
   nullWarnText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: Colors.blacktheme.gray,
   },
   nullWarnTextSec: {
     fontSize: 15,
-    color: Colors.blacktheme.gray,
   },
   itemsContainer: {
-    backgroundColor: Colors.blacktheme.card.background,
     padding: 20,
     flexDirection: 'row',
   },
   itemsDesc: {
-    color: Colors.blacktheme.card.text,
     fontSize: 15,
     flex: 1,
     justifyContent: 'center',
@@ -235,7 +238,6 @@ const styles = new StyleSheet.create({
     marginHorizontal: 10,
   },
   itemsValue: {
-    color: Colors.blacktheme.card.text,
     fontSize: 20,
     fontWeight: 'bold',
     justifyContent: 'center',

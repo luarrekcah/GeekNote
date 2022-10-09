@@ -7,7 +7,6 @@ import {
   ToastAndroid,
 } from 'react-native';
 import {List, Dialog, Paragraph, Divider, Button} from 'react-native-paper';
-import Colors from '../../Global/colorScheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   GoogleSignin,
@@ -16,8 +15,12 @@ import {
 } from '@react-native-google-signin/google-signin';
 import database from '@react-native-firebase/database';
 
+import CustomTheme from '../../Global/CustomTheme';
+
 const Config = ({navigation}) => {
   const {version} = require('../../../package.json');
+
+  const [theme, setTheme] = React.useState(CustomTheme());
 
   const [visible, setVisible] = React.useState(false);
 
@@ -45,7 +48,7 @@ const Config = ({navigation}) => {
       loadData();
     });
     return unsubscribe;
-  }, [navigation]);
+  }, [navigation, theme]);
 
   const showToast = message => {
     ToastAndroid.show(message, ToastAndroid.SHORT);
@@ -212,41 +215,35 @@ const Config = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
       <ScrollView>
         <List.Section>
-          <List.Subheader style={{color: Colors.blacktheme.card.text}}>
+          <List.Subheader style={{color: theme.config.section}}>
             Usuário
           </List.Subheader>
           {loggedIn ? (
             <>
               <List.Item
                 title="Salvar dados"
-                titleStyle={{color: Colors.blacktheme.card.text}}
+                titleStyle={{color: theme.config.text}}
                 left={() => (
-                  <List.Icon
-                    color={Colors.blacktheme.primary}
-                    icon="cloud-upload"
-                  />
+                  <List.Icon color={theme.config.icon} icon="cloud-upload" />
                 )}
                 onPress={() => saveData()}
               />
               <List.Item
                 title="Carregar dados"
-                titleStyle={{color: Colors.blacktheme.card.text}}
+                titleStyle={{color: theme.config.text}}
                 left={() => (
-                  <List.Icon
-                    color={Colors.blacktheme.primary}
-                    icon="cloud-download"
-                  />
+                  <List.Icon color={theme.config.icon} icon="cloud-download" />
                 )}
                 onPress={() => loadCloudData()}
               />
               <List.Item
                 title="Deslogar do Google"
-                titleStyle={{color: Colors.blacktheme.card.text}}
+                titleStyle={{color: theme.config.text}}
                 left={() => (
-                  <List.Icon color={Colors.blacktheme.primary} icon="logout" />
+                  <List.Icon color={theme.config.icon} icon="logout" />
                 )}
                 onPress={() => signOut()}
               />
@@ -265,36 +262,34 @@ const Config = ({navigation}) => {
 
           <List.Item
             title="Excluir dados"
-            titleStyle={{color: Colors.blacktheme.card.text}}
+            titleStyle={{color: theme.config.text}}
             left={() => (
-              <List.Icon color={Colors.blacktheme.primary} icon="trash-can" />
+              <List.Icon color={theme.config.icon} icon="trash-can" />
             )}
             onPress={showDialog}
           />
         </List.Section>
         <List.Section>
-          <List.Subheader style={{color: Colors.blacktheme.card.text}}>
+          <List.Subheader style={{color: theme.config.section}}>
             Comunidade
           </List.Subheader>
           <List.Item
             title="Discord"
-            titleStyle={{color: Colors.blacktheme.card.text}}
-            left={() => (
-              <List.Icon color={Colors.blacktheme.primary} icon="discord" />
-            )}
+            titleStyle={{color: theme.config.text}}
+            left={() => <List.Icon color={theme.config.icon} icon="discord" />}
             onPress={() => {
               Linking.openURL('https://discord.gg/PxZW7d3dvb');
             }}
           />
-          <List.Subheader style={{color: Colors.blacktheme.card.text}}>
+          <List.Subheader style={{color: theme.config.section}}>
             Sobre
           </List.Subheader>
 
           <List.Item
             title="Termos de uso"
-            titleStyle={{color: Colors.blacktheme.card.text}}
+            titleStyle={{color: theme.config.text}}
             left={() => (
-              <List.Icon color={Colors.blacktheme.primary} icon="information" />
+              <List.Icon color={theme.config.icon} icon="information" />
             )}
             onPress={() => {
               Linking.openURL('https://geeknote.devluar.com/tos');
@@ -302,9 +297,9 @@ const Config = ({navigation}) => {
           />
           <List.Item
             title="Política de privacidade"
-            titleStyle={{color: Colors.blacktheme.card.text}}
+            titleStyle={{color: theme.config.text}}
             left={() => (
-              <List.Icon color={Colors.blacktheme.primary} icon="information" />
+              <List.Icon color={theme.config.icon} icon="information" />
             )}
             onPress={() => {
               Linking.openURL('https://geeknote.devluar.com/pop');
@@ -312,19 +307,17 @@ const Config = ({navigation}) => {
           />
           <List.Item
             title="Relatar problema"
-            titleStyle={{color: Colors.blacktheme.card.text}}
-            left={() => (
-              <List.Icon color={Colors.blacktheme.primary} icon="bug" />
-            )}
+            titleStyle={{color: theme.config.text}}
+            left={() => <List.Icon color={theme.config.icon} icon="bug" />}
             onPress={() => {
               Linking.openURL('https://wa.me/+556892402096');
             }}
           />
           <List.Item
             title="Doar"
-            titleStyle={{color: Colors.blacktheme.card.text}}
+            titleStyle={{color: theme.config.text}}
             left={() => (
-              <List.Icon color={Colors.blacktheme.primary} icon="piggy-bank" />
+              <List.Icon color={theme.config.icon} icon="piggy-bank" />
             )}
             onPress={() => {
               Linking.openURL('https://wa.me/+556892402096');
@@ -332,12 +325,10 @@ const Config = ({navigation}) => {
           />
           <List.Item
             title="Versão"
-            titleStyle={{color: Colors.blacktheme.card.text}}
-            descriptionStyle={{color: Colors.blacktheme.card.text}}
+            titleStyle={{color: theme.config.text}}
+            descriptionStyle={{color: theme.config.text}}
             description={version}
-            left={() => (
-              <List.Icon color={Colors.blacktheme.primary} icon="android" />
-            )}
+            left={() => <List.Icon color={theme.config.icon} icon="android" />}
             onPress={() => {
               Linking.openURL('https://geeknote.devluar.com/updates');
             }}
@@ -379,7 +370,6 @@ const Config = ({navigation}) => {
 const styles = new StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.blacktheme.backgroundColor,
   },
   googleButton: {
     width: '100%',
