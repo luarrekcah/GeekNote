@@ -12,6 +12,7 @@ import Colors from '../../Global/colorScheme';
 import {FAB} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import CustomTheme from '../../hooks/useTheme';
 
 const Card = ({route, navigation}) => {
   const {card} = route.params;
@@ -70,7 +71,11 @@ const Card = ({route, navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {backgroundColor: CustomTheme.backgroundColor},
+      ]}>
       <View style={styles.itemsContainer}>
         <Text style={styles.itemsDesc}>{card.description}</Text>
         <Text style={styles.itemsValue}>R${getValue(card)}</Text>
@@ -165,7 +170,6 @@ const Card = ({route, navigation}) => {
 const styles = new StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.blacktheme.backgroundColor,
   },
   fab: {
     position: 'absolute',
