@@ -4,6 +4,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
+import CustomTheme from '../../Global/CustomTheme';
 
 import Colors from '../../Global/colorScheme';
 
@@ -50,7 +51,10 @@ const Main = ({navigation}) => {
           tabBarIcon: ({tintColor}) => (
             <View>
               <LinearGradient
-                style={styles.iconTabRound}
+                style={[
+                  styles.iconTabRound,
+                  {shadowColor: CustomTheme().home.homeIcon[1]},
+                ]}
                 start={{x: 0, y: 1}}
                 end={{x: 0, y: 0}}
                 colors={Colors.blacktheme.home.homeIcon}>
@@ -81,7 +85,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 6,
-    shadowColor: Colors.blacktheme.home.homeIcon[1],
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.2,
     shadowRadius: 5,

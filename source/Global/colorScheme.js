@@ -11,6 +11,7 @@ const Colors = {
     },
     home: {
       homeIcon: ['#0f0f0f', '#2b2b2a'],
+      header: ['#1c1b1b', '#2b1311'],
     },
     config: {
       section: '',
@@ -27,6 +28,15 @@ const Colors = {
     card: {
       background: '#6138b5',
       text: '#f3edff',
+    },
+    home: {
+      homeIcon: ['#321075', '#9d80d8'],
+      header: ['#321075', '#9d80d8'],
+    },
+    config: {
+      section: '',
+      text: '',
+      icon: '',
     },
   },
 };

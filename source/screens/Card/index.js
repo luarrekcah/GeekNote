@@ -12,7 +12,7 @@ import Colors from '../../Global/colorScheme';
 import {FAB} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import CustomTheme from '../../hooks/useTheme';
+import CustomTheme from '../../Global/CustomTheme';
 
 const Card = ({route, navigation}) => {
   const {card} = route.params;
@@ -74,7 +74,7 @@ const Card = ({route, navigation}) => {
     <View
       style={[
         styles.container,
-        {backgroundColor: CustomTheme.backgroundColor},
+        {backgroundColor: CustomTheme().backgroundColor},
       ]}>
       <View style={styles.itemsContainer}>
         <Text style={styles.itemsDesc}>{card.description}</Text>

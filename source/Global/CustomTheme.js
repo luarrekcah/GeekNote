@@ -1,8 +1,8 @@
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Colors from '../Global/colorScheme';
+import Colors from './colorScheme';
 
-const useTheme = () => {
+const CustomTheme = () => {
   const [color, setColor] = React.useState(Colors.blacktheme);
   AsyncStorage.getItem('colorScheme').then(data => {
     if (data === null || data === '') {
@@ -28,4 +28,4 @@ const useTheme = () => {
   return color;
 };
 
-export default useTheme;
+export default CustomTheme;

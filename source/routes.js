@@ -13,12 +13,10 @@ import Config from './screens/Config';
 import NewGeek from './screens/NewGeek';
 import ViewGeek from './screens/ViewGeek';
 import NewNote from './screens/NewNote';
-import useTheme from './hooks/useTheme';
 
 const Stack = createNativeStackNavigator();
 
 const Routes = () => {
-  const theme = useTheme();
   return (
     <NavigationContainer>
       <Stack.Navigator

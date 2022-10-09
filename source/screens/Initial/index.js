@@ -3,15 +3,20 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Colors from '../../Global/colorScheme';
+import CustomTheme from '../../Global/CustomTheme';
 
 const Initial = ({navigation}) => {
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {backgroundColor: CustomTheme().backgroundColor},
+      ]}>
       <LinearGradient
         style={styles.header}
         start={{x: 0, y: 1}}
         end={{x: 0, y: 0}}
-        colors={['#321075', '#9d80d8']}>
+        colors={CustomTheme().home.header}>
         <Text>Seja bem vindo!</Text>
       </LinearGradient>
       <View style={styles.main}>
@@ -24,7 +29,6 @@ const Initial = ({navigation}) => {
 const styles = new StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.blacktheme.backgroundColor,
   },
   header: {
     height: 150,
