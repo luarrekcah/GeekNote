@@ -11,10 +11,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FAB, List} from 'react-native-paper';
 import Colors from '../../../../Global/colorScheme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import CustomTheme from '../../../../Global/CustomTheme';
 
 const Home = ({navigation}) => {
   const [cards, setCards] = useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [theme, setTheme] = React.useState(CustomTheme());
 
   const loadData = () => {
     if (AsyncStorage.getItem('cards')) {
@@ -68,26 +70,34 @@ const Home = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
         {cards === null || cards.length === 0 ? (
           <View style={styles.nullWarn}>
-            <Text style={styles.nullWarnText}>
+            <Text style={[styles.nullWarnText, {color: theme.white}]}>
               Seja bem vindo(a) a ala cards!
             </Text>
-            <Text style={styles.nullWarnTextSec}>
+            <Text style={[styles.nullWarnTextSec, {color: theme.gray}]}>
               Adicione um card inicial e desfrute
             </Text>
           </View>
         ) : (
           <>
-            <View style={styles.header}>
-              <Text style={styles.textHeader}>Valor Total:</Text>
-              <View style={styles.valueHeaderBackground}>
-                <Text style={styles.valueHeader}>R${getTotal()}</Text>
+            <View style={[styles.header, {backgroundColor: theme.primary}]}>
+              <Text style={[styles.textHeader, {color: theme.card.text}]}>
+                Valor Total:
+              </Text>
+              <View
+                style={[
+                  styles.valueHeaderBackground,
+                  {backgroundColor: theme.card.background},
+                ]}>
+                <Text style={[styles.valueHeader, {color: theme.card.text}]}>
+                  R${getTotal()}
+                </Text>
               </View>
             </View>
             <List.Section>
@@ -97,8 +107,15 @@ const Home = ({navigation}) => {
                     <TouchableOpacity
                       onPress={() => openCard(item.id)}
                       key={item.id}>
-                      <View style={styles.itemsContainer}>
-                        <Text style={styles.itemsTitle}>{item.title}</Text>
+                      <View
+                        style={[
+                          styles.itemsContainer,
+                          {backgroundColor: theme.card.background},
+                        ]}>
+                        <Text
+                          style={[styles.itemsTitle, {color: theme.card.text}]}>
+                          {item.title}
+                        </Text>
                         <View style={styles.row}>
                           <TouchableOpacity
                             style={styles.buttonsCardTop}
@@ -111,8 +128,12 @@ const Home = ({navigation}) => {
                             <Icon name="edit" size={30} color="#fff" />
                           </TouchableOpacity>
                         </View>
-                        <Text style={styles.itemsDesc}>{item.description}</Text>
-                        <Text style={styles.itemsValue}>
+                        <Text
+                          style={[styles.itemsDesc, {color: theme.card.text}]}>
+                          {item.description}
+                        </Text>
+                        <Text
+                          style={[styles.itemsValue, {color: theme.card.text}]}>
                           R${getValue(item)}
                         </Text>
                       </View>
@@ -127,7 +148,7 @@ const Home = ({navigation}) => {
 
       <FAB
         icon="plus"
-        style={styles.fab}
+        style={[styles.fab, {backgroundColor: theme.primary}]}
         onPress={() =>
           navigation.navigate('NewCard', {card: {title: '', description: ''}})
         }
@@ -139,11 +160,9 @@ const Home = ({navigation}) => {
 const styles = new StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.blacktheme.backgroundColor,
   },
   header: {
     paddingTop: 10,
-    backgroundColor: Colors.blacktheme.primary,
     width: '100%',
     height: 200,
     borderBottomLeftRadius: 20,
@@ -151,12 +170,10 @@ const styles = new StyleSheet.create({
   },
   textHeader: {
     alignSelf: 'center',
-    color: Colors.blacktheme.card.text,
     fontSize: 20,
   },
   valueHeaderBackground: {
     alignSelf: 'center',
-    backgroundColor: Colors.blacktheme.card.background,
     borderRadius: 20,
     paddingHorizontal: 40,
     paddingVertical: 5,
@@ -164,7 +181,6 @@ const styles = new StyleSheet.create({
   valueHeader: {
     fontSize: 30,
     fontWeight: 'bold',
-    color: Colors.blacktheme.card.text,
   },
   row: {
     flexDirection: 'row',
@@ -176,7 +192,6 @@ const styles = new StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
-    backgroundColor: Colors.blacktheme.primary,
   },
   nullWarn: {
     flex: 1,
@@ -187,31 +202,25 @@ const styles = new StyleSheet.create({
   nullWarnText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: Colors.blacktheme.white,
   },
   nullWarnTextSec: {
     fontSize: 15,
-    color: Colors.blacktheme.gray,
   },
   itemsContainer: {
     padding: 40,
-    backgroundColor: Colors.blacktheme.card.background,
     borderRadius: 40,
     margin: 10,
   },
   itemsTitle: {
-    color: Colors.blacktheme.card.text,
     fontSize: 25,
     fontWeight: 'bold',
     marginBottom: 10,
   },
   itemsDesc: {
-    color: Colors.blacktheme.card.text,
     fontSize: 20,
     marginVertical: 20,
   },
   itemsValue: {
-    color: Colors.blacktheme.card.text,
     fontSize: 30,
     fontWeight: 'bold',
   },

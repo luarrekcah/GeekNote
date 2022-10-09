@@ -70,11 +70,7 @@ const Card = ({route, navigation}) => {
   };
 
   return (
-    <View
-      style={[
-        styles.container,
-        {backgroundColor: CustomTheme().backgroundColor},
-      ]}>
+    <View style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
       <View
         style={[
           styles.itemsContainer,

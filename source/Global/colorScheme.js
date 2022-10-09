@@ -1,5 +1,25 @@
 const Colors = {
   blacktheme: {
+    primary: '#5e0909',
+    backgroundColor: '#2e2e2d',
+    fulldark: '#000000',
+    white: 'white',
+    gray: '#7a7a7a',
+    card: {
+      background: '#7d7c7a',
+      text: '#171716',
+    },
+    home: {
+      homeIcon: ['#5e0909', '#5e0909'],
+      header: ['#1c1b1b', '#5e0909'],
+    },
+    config: {
+      section: '#fff',
+      text: '#fff',
+      icon: '#fff',
+    },
+  },
+  darkness: {
     primary: '#171716',
     backgroundColor: '#2e2e2d',
     fulldark: '#000000',
@@ -34,9 +54,9 @@ const Colors = {
       header: ['#321075', '#9d80d8'],
     },
     config: {
-      section: '',
-      text: '',
-      icon: '',
+      section: '#321075',
+      text: '#321075',
+      icon: '#321075',
     },
   },
 };

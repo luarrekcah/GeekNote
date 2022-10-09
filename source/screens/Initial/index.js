@@ -6,20 +6,17 @@ import Colors from '../../Global/colorScheme';
 import CustomTheme from '../../Global/CustomTheme';
 
 const Initial = ({navigation}) => {
+  const [theme, setTheme] = React.useState(CustomTheme());
   return (
-    <View
-      style={[
-        styles.container,
-        {backgroundColor: CustomTheme().backgroundColor},
-      ]}>
+    <View style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
       <LinearGradient
         style={styles.header}
         start={{x: 0, y: 1}}
         end={{x: 0, y: 0}}
-        colors={CustomTheme().home.header}>
+        colors={theme.home.header}>
         <Text>Seja bem vindo!</Text>
       </LinearGradient>
-      <View style={styles.main}>
+      <View style={[styles.main, {backgroundColor: theme.backgroundColor}]}>
         <Text>Cards aq</Text>
       </View>
     </View>
@@ -37,7 +34,6 @@ const styles = new StyleSheet.create({
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     top: -30,
-    backgroundColor: Colors.blacktheme.backgroundColor,
     height: 300,
   },
 });

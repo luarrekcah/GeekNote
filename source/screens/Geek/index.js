@@ -13,12 +13,15 @@ import {
 import {Button, Modal} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../Global/colorScheme';
+import CustomTheme from '../../Global/CustomTheme';
 
 const Geek = ({navigation}) => {
   const [livros, setLivros] = React.useState();
   const [animes, setAnimes] = React.useState();
   const [filmes, setFilmes] = React.useState();
   const [refreshing, setRefreshing] = React.useState(false);
+
+  const [theme, setTheme] = React.useState(CustomTheme());
 
   const [modal, setmodal] = React.useState();
 
@@ -137,7 +140,10 @@ const Geek = ({navigation}) => {
         <Modal
           visible={visible}
           onDismiss={hideModal}
-          contentContainerStyle={styles.modalStyle}>
+          contentContainerStyle={[
+            styles.modalStyle,
+            {backgroundColor: theme.backgroundColor},
+          ]}>
           {modal !== undefined ? (
             <View>
               <Image
@@ -149,7 +155,9 @@ const Geek = ({navigation}) => {
                       : modal.volumeInfo.imageLinks.thumbnail,
                 }}
               />
-              <Text style={styles.title}>{modal.volumeInfo.title}</Text>
+              <Text style={[styles.title, {color: theme.white}]}>
+                {modal.volumeInfo.title}
+              </Text>
               <Button
                 style={styles.deleteButton}
                 icon="trash-can"
@@ -168,7 +176,10 @@ const Geek = ({navigation}) => {
         <Modal
           visible={visible}
           onDismiss={hideModal}
-          contentContainerStyle={styles.modalStyle}>
+          contentContainerStyle={[
+            styles.modalStyle,
+            {backgroundColor: theme.backgroundColor},
+          ]}>
           {modal !== undefined ? (
             <View>
               <Image
@@ -177,7 +188,7 @@ const Geek = ({navigation}) => {
                   uri: modal.attributes.posterImage.original,
                 }}
               />
-              <Text style={styles.title}>
+              <Text style={[styles.title, {color: theme.white}]}>
                 {modal.attributes.canonicalTitle}
               </Text>
               <Button
@@ -198,7 +209,10 @@ const Geek = ({navigation}) => {
         <Modal
           visible={visible}
           onDismiss={hideModal}
-          contentContainerStyle={styles.modalStyle}>
+          contentContainerStyle={[
+            styles.modalStyle,
+            {backgroundColor: theme.backgroundColor},
+          ]}>
           {modal !== undefined ? (
             <View>
               <Image
@@ -207,7 +221,9 @@ const Geek = ({navigation}) => {
                   uri: `https://www.themoviedb.org/t/p/w600_and_h900_bestv2${modal.poster_path}`,
                 }}
               />
-              <Text style={styles.title}>{modal.title}</Text>
+              <Text style={[styles.title, {color: theme.white}]}>
+                {modal.title}
+              </Text>
               <Button
                 style={styles.deleteButton}
                 icon="trash-can"
@@ -225,12 +241,13 @@ const Geek = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        <View style={styles.listBar}>
+        <View
+          style={[styles.listBar, {backgroundColor: theme.card.background}]}>
           <Text style={styles.textListBar}>Meus Livros</Text>
           <TouchableOpacity
             onPress={() => {
@@ -265,7 +282,8 @@ const Geek = ({navigation}) => {
             </TouchableOpacity>
           )}
         />
-        <View style={styles.listBar}>
+        <View
+          style={[styles.listBar, {backgroundColor: theme.card.background}]}>
           <Text style={styles.textListBar}>Meus Animes</Text>
           <TouchableOpacity
             onPress={() => {
@@ -297,8 +315,11 @@ const Geek = ({navigation}) => {
             </TouchableOpacity>
           )}
         />
-        <View style={styles.listBar}>
-          <Text style={styles.textListBar}>Meus Filmes/Séries</Text>
+        <View
+          style={[styles.listBar, {backgroundColor: theme.card.background}]}>
+          <Text style={[styles.textListBar, {color: theme.white}]}>
+            Meus Filmes/Séries
+          </Text>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('NewGeek', {type: 'filme'});
@@ -338,7 +359,6 @@ const Geek = ({navigation}) => {
 const styles = new StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.blacktheme.backgroundColor,
   },
   listBar: {
     marginVertical: 10,
@@ -350,13 +370,11 @@ const styles = new StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'space-between',
     borderRadius: 20,
-    backgroundColor: Colors.blacktheme.primary,
   },
   textListBar: {
     flex: 1,
     fontWeight: 'bold',
     fontSize: 20,
-    color: Colors.blacktheme.white,
   },
   card: {
     marginHorizontal: 10,
@@ -366,7 +384,6 @@ const styles = new StyleSheet.create({
     height: 200,
   },
   modalStyle: {
-    backgroundColor: Colors.blacktheme.backgroundColor,
     borderRadius: 40,
     padding: 40,
     margin: 20,
@@ -374,7 +391,6 @@ const styles = new StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 20,
-    color: Colors.blacktheme.white,
     alignSelf: 'center',
     marginVertical: 10,
   },

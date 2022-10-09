@@ -17,12 +17,13 @@ import Home from './components/Home';
 import Initial from '../Initial';
 
 const Main = ({navigation}) => {
+  const [theme, setTheme] = React.useState(CustomTheme());
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: {backgroundColor: Colors.blacktheme.primary},
+        tabBarStyle: {backgroundColor: theme.primary},
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
           if (route.name === 'Cards') {
@@ -33,12 +34,10 @@ const Main = ({navigation}) => {
             iconName = focused ? 'reader' : 'reader-outline';
           } else if (route.name === 'Diary') {
             iconName = focused ? 'heart' : 'heart-outline';
-          } /*else if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'home-outline';
-          }*/
+          }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: Colors.blacktheme.white,
+        tabBarActiveTintColor: theme.white,
         tabBarInactiveTintColor: 'gray',
       })}
       initialRouteName="Initial">
@@ -53,11 +52,11 @@ const Main = ({navigation}) => {
               <LinearGradient
                 style={[
                   styles.iconTabRound,
-                  {shadowColor: CustomTheme().home.homeIcon[1]},
+                  {shadowColor: theme.home.homeIcon[1]},
                 ]}
                 start={{x: 0, y: 1}}
                 end={{x: 0, y: 0}}
-                colors={Colors.blacktheme.home.homeIcon}>
+                colors={theme.home.homeIcon}>
                 <Icon name="home" size={26} color="#fff" />
               </LinearGradient>
             </View>

@@ -5,6 +5,10 @@ import {
   Linking,
   StyleSheet,
   ToastAndroid,
+  Modal,
+  Text,
+  Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 import {List, Dialog, Paragraph, Divider, Button} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -14,6 +18,7 @@ import {
   GoogleSigninButton,
 } from '@react-native-google-signin/google-signin';
 import database from '@react-native-firebase/database';
+import LinearGradient from 'react-native-linear-gradient';
 
 import CustomTheme from '../../Global/CustomTheme';
 
@@ -21,6 +26,8 @@ const Config = ({navigation}) => {
   const {version} = require('../../../package.json');
 
   const [theme, setTheme] = React.useState(CustomTheme());
+
+  const [modalVisible, setModalVisible] = React.useState(false);
 
   const [visible, setVisible] = React.useState(false);
 
@@ -226,6 +233,8 @@ const Config = ({navigation}) => {
               <List.Item
                 title="Salvar dados"
                 titleStyle={{color: theme.config.text}}
+                description="Salvar seus dados na núvem"
+                descriptionStyle={{color: theme.gray}}
                 left={() => (
                   <List.Icon color={theme.config.icon} icon="cloud-upload" />
                 )}
@@ -234,6 +243,8 @@ const Config = ({navigation}) => {
               <List.Item
                 title="Carregar dados"
                 titleStyle={{color: theme.config.text}}
+                description="Carregar seus dados da núvem"
+                descriptionStyle={{color: theme.gray}}
                 left={() => (
                   <List.Icon color={theme.config.icon} icon="cloud-download" />
                 )}
@@ -242,6 +253,8 @@ const Config = ({navigation}) => {
               <List.Item
                 title="Deslogar do Google"
                 titleStyle={{color: theme.config.text}}
+                description="Sair ou trocar conta"
+                descriptionStyle={{color: theme.gray}}
                 left={() => (
                   <List.Icon color={theme.config.icon} icon="logout" />
                 )}
@@ -263,6 +276,8 @@ const Config = ({navigation}) => {
           <List.Item
             title="Excluir dados"
             titleStyle={{color: theme.config.text}}
+            description="Apagar dados da núvem e app"
+            descriptionStyle={{color: theme.gray}}
             left={() => (
               <List.Icon color={theme.config.icon} icon="trash-can" />
             )}
@@ -276,9 +291,24 @@ const Config = ({navigation}) => {
           <List.Item
             title="Discord"
             titleStyle={{color: theme.config.text}}
+            description="Será um prazer lhe receber na nossa comunidade!"
+            descriptionStyle={{color: theme.gray}}
             left={() => <List.Icon color={theme.config.icon} icon="discord" />}
             onPress={() => {
               Linking.openURL('https://discord.gg/PxZW7d3dvb');
+            }}
+          />
+          <List.Subheader style={{color: theme.config.section}}>
+            Visual
+          </List.Subheader>
+          <List.Item
+            title="Tema"
+            description="Altere o esquema de cores do aplicativo"
+            titleStyle={{color: theme.config.text}}
+            descriptionStyle={{color: theme.gray}}
+            left={() => <List.Icon color={theme.config.icon} icon="palette" />}
+            onPress={() => {
+              setModalVisible(true);
             }}
           />
           <List.Subheader style={{color: theme.config.section}}>
@@ -326,7 +356,7 @@ const Config = ({navigation}) => {
           <List.Item
             title="Versão"
             titleStyle={{color: theme.config.text}}
-            descriptionStyle={{color: theme.config.text}}
+            descriptionStyle={{color: theme.gray}}
             description={version}
             left={() => <List.Icon color={theme.config.icon} icon="android" />}
             onPress={() => {
@@ -363,6 +393,80 @@ const Config = ({navigation}) => {
           </Button>
         </Dialog.Actions>
       </Dialog>
+      <View>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}>
+          <View style={[styles.modalView, {backgroundColor: theme.primary}]}>
+            <View style={styles.detail} />
+            <List.Subheader style={{color: theme.config.section}}>
+              Selecione seu tema
+            </List.Subheader>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <TouchableOpacity
+                onPress={async () => {
+                  await AsyncStorage.setItem('colorScheme', 'ligththeme');
+                  console.log('seted ligth theme');
+                  setModalVisible(false);
+                }}>
+                <LinearGradient
+                  style={styles.colorTab}
+                  start={{x: 0, y: 1}}
+                  end={{x: 0, y: 0}}
+                  colors={['#c6ccc8', '#6e1717']}>
+                  <Text>LIGHT</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={async () => {
+                  await AsyncStorage.setItem('colorScheme', 'blacktheme');
+                  console.log('seted black theme');
+                  setModalVisible(false);
+                }}>
+                <LinearGradient
+                  style={styles.colorTab}
+                  start={{x: 0, y: 1}}
+                  end={{x: 0, y: 0}}
+                  colors={['#0f0f0f', '#5e0909']}>
+                  <Text>BLACK</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={async () => {
+                  await AsyncStorage.setItem('colorScheme', 'darkness');
+                  console.log('seted darkness');
+                  setModalVisible(false);
+                }}>
+                <LinearGradient
+                  style={styles.colorTab}
+                  start={{x: 0, y: 1}}
+                  end={{x: 0, y: 0}}
+                  colors={['#0f0f0f', '#2b2b2a']}>
+                  <Text>DARKNESS</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={async () => {
+                  await AsyncStorage.setItem('colorScheme', 'purpledark');
+                  console.log('seted purple dark');
+                  setModalVisible(false);
+                }}>
+                <LinearGradient
+                  style={styles.colorTab}
+                  start={{x: 0, y: 1}}
+                  end={{x: 0, y: 0}}
+                  colors={['#321075', '#9d80d8']}>
+                  <Text>PURPLE DARK</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            </ScrollView>
+          </View>
+        </Modal>
+      </View>
     </View>
   );
 };
@@ -373,6 +477,39 @@ const styles = new StyleSheet.create({
   },
   googleButton: {
     width: '100%',
+  },
+  modalView: {
+    position: 'absolute',
+    bottom: 0,
+    width: Dimensions.get('window').width,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    paddingHorizontal: 15,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  detail: {
+    width: 100,
+    height: 5,
+    backgroundColor: '#fff',
+    alignSelf: 'center',
+    margin: 15,
+    borderRadius: 20,
+  },
+  colorTab: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 10,
+    marginVertical: 30,
   },
 });
 
