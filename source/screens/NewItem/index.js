@@ -48,17 +48,18 @@ const NewItem = ({route, navigation}) => {
   const saveData = async () => {
     if (isValid()) {
       if (isEdit) {
-        const newAllCards = [];
-        allCards.forEach(cardUnique => {
-          cardUnique.items.forEach(it => {
-            if (it.id === item.id) {
-              it.title = title;
-              it.description = description;
-              it.link = link;
-              it.value = value;
-            }
-          });
-          newAllCards.push(cardUnique);
+        const newAllCards = allCards.map(cardMap => {
+          if (cardMap.id === card.id) {
+            cardMap.items.map(it => {
+              if (it.id === item.id) {
+                it.title = title;
+                it.description = description;
+                it.link = link;
+                it.value = value;
+              }
+            });
+          }
+          return cardMap;
         });
         await AsyncStorage.setItem('cards', JSON.stringify(newAllCards));
         navigation.goBack();
@@ -71,11 +72,12 @@ const NewItem = ({route, navigation}) => {
           link,
           value,
         };
-        let newAllCards = [];
-        const cardActually = allCards.find(itemC => itemC.id === card.id);
-        cardActually.items.push(data);
-        newAllCards.push(cardActually);
-        newAllCards += allCards.filter(itemC => itemC.id !== card.id);
+
+        const newAllCards = allCards.map(cardMap => {
+          if (cardMap.id === card.id) {
+            cardMap.items.push(data);
+          }
+        });
         setAllCards(newAllCards);
         await AsyncStorage.setItem('cards', JSON.stringify(allCards));
         navigation.goBack();

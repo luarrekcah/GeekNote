@@ -36,6 +36,7 @@ const Card = ({route, navigation}) => {
     if (AsyncStorage.getItem('cards')) {
       AsyncStorage.getItem('cards').then(data => {
         const dba = JSON.parse(data);
+        setAllCards(dba);
         const cardAc = dba.find(item => item.id === card.id);
         setCardNow(cardAc);
       });
@@ -58,14 +59,17 @@ const Card = ({route, navigation}) => {
   }, []);
 
   const deleteItem = async itemId => {
-    //let newAllCards = [];
-    const newItems = cardNow.items.filter(item => item.id !== itemId);
-    cardNow.items = newItems;
-    setCardNow(cardNow);
-    allCards.push(cardNow);
-    //newAllCards += allCards;
-    await AsyncStorage.setItem('cards', JSON.stringify(allCards));
-    setAllCards(allCards);
+    const newCards = allCards.map(cardMap => {
+      if (cardMap.id === cardNow.id) {
+        cardMap.items = cardMap.items.filter(item => item.id !== itemId);
+        console.log(cardMap);
+        return cardMap;
+      }
+      return cardMap;
+    });
+
+    await AsyncStorage.setItem('cards', JSON.stringify(newCards));
+    setAllCards(newCards);
     loadData();
   };
 

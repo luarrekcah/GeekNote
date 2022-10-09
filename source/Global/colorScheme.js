@@ -34,9 +34,9 @@ const Colors = {
       header: ['#1c1b1b', '#1c1b1b'],
     },
     config: {
-      section: '#fff',
-      text: '#fff',
-      icon: '#fff',
+      section: '#7a7a7a',
+      text: '#f2e5e4',
+      icon: '#f2e5e4',
     },
   },
   purpledark: {
@@ -54,9 +54,9 @@ const Colors = {
       header: ['#321075', '#9d80d8'],
     },
     config: {
-      section: '#321075',
-      text: '#321075',
-      icon: '#321075',
+      section: '#7a7a7a',
+      text: '#fff',
+      icon: '#fff',
     },
   },
 };

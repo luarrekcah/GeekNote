@@ -21,6 +21,7 @@ import database from '@react-native-firebase/database';
 import LinearGradient from 'react-native-linear-gradient';
 
 import CustomTheme from '../../Global/CustomTheme';
+import Colors from '../../Global/colorScheme';
 
 const Config = ({navigation}) => {
   const {version} = require('../../../package.json');
@@ -410,7 +411,6 @@ const Config = ({navigation}) => {
               <TouchableOpacity
                 onPress={async () => {
                   await AsyncStorage.setItem('colorScheme', 'ligththeme');
-                  console.log('seted ligth theme');
                   setModalVisible(false);
                 }}>
                 <LinearGradient
@@ -424,7 +424,7 @@ const Config = ({navigation}) => {
               <TouchableOpacity
                 onPress={async () => {
                   await AsyncStorage.setItem('colorScheme', 'blacktheme');
-                  console.log('seted black theme');
+                  setTheme(Colors.blacktheme);
                   setModalVisible(false);
                 }}>
                 <LinearGradient
@@ -438,7 +438,7 @@ const Config = ({navigation}) => {
               <TouchableOpacity
                 onPress={async () => {
                   await AsyncStorage.setItem('colorScheme', 'darkness');
-                  console.log('seted darkness');
+                  setTheme(Colors.darkness);
                   setModalVisible(false);
                 }}>
                 <LinearGradient
@@ -452,7 +452,7 @@ const Config = ({navigation}) => {
               <TouchableOpacity
                 onPress={async () => {
                   await AsyncStorage.setItem('colorScheme', 'purpledark');
-                  console.log('seted purple dark');
+                  setTheme(Colors.purpledark);
                   setModalVisible(false);
                 }}>
                 <LinearGradient
