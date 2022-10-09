@@ -72,7 +72,6 @@ const NewItem = ({route, navigation}) => {
           link,
           value,
         };
-
         const newAllCards = allCards.map(cardMap => {
           if (cardMap.id === card.id) {
             cardMap.items.push(data);
