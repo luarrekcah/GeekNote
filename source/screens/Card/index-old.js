@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {
   View,
+  FlatList,
   Text,
   TouchableOpacity,
   RefreshControl,
@@ -11,15 +12,11 @@ import {FAB} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import CustomTheme from '../../Global/CustomTheme';
-import DraggableFlatList, {
-  ScaleDecorator,
-} from 'react-native-draggable-flatlist';
 
 const Card = ({route, navigation}) => {
   const {card} = route.params;
   const [allCards, setAllCards] = React.useState([]);
   const [cardNow, setCardNow] = React.useState(card);
-  const [items, setItems] = React.useState(cardNow.items);
   const [refreshing, setRefreshing] = React.useState(false);
   const [theme, setTheme] = React.useState(CustomTheme());
 
@@ -42,7 +39,6 @@ const Card = ({route, navigation}) => {
         setAllCards(dba);
         const cardAc = dba.find(item => item.id === card.id);
         setCardNow(cardAc);
-        setItems(cardAc.items);
       });
     }
   };
@@ -93,75 +89,67 @@ const Card = ({route, navigation}) => {
       </View>
       <View style={styles.container}>
         {card.items.length !== 0 ? (
-          <DraggableFlatList
-            data={items}
-            onDragEnd={({data}) => setItems(data)}
+          <FlatList
+            data={cardNow.items}
             keyExtractor={item => item.id}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
-            renderItem={({item, drag, isActive}) => {
+            renderItem={({item}) => {
               return (
-                <ScaleDecorator>
-                  <TouchableOpacity onLongPress={drag} disabled={isActive}>
-                    <View
-                      style={[
-                        styles.containerItem,
-                        {backgroundColor: theme.card.background},
-                      ]}>
-                      <View style={styles.topItem}>
-                        <Text
-                          style={[styles.titleItem, {color: theme.card.text}]}>
-                          {item.title}
-                        </Text>
-                        <Text
-                          style={[styles.descItem, {color: theme.card.text}]}>
-                          {item.description}
-                        </Text>
-                        <Text
-                          style={[styles.titleItem, {color: theme.card.text}]}>
-                          R${item.value}
-                        </Text>
-                      </View>
-                      <View style={styles.bottomItem}>
-                        <TouchableOpacity
-                          style={styles.buttonItem}
-                          onPress={() => {
-                            Linking.openURL(item.link);
-                          }}>
-                          <Icon name="link" size={30} color={theme.card.text} />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          style={styles.buttonItem}
-                          onPress={() => {
-                            navigation.navigate('NewItem', {
-                              item: item,
-                              card: card,
-                              isEdit: true,
-                            });
-                          }}>
-                          <Icon
-                            name="edit"
-                            size={30}
-                            color={theme.card.text}
-                            selectionColor={theme.card.text}
-                          />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          style={styles.buttonItem}
-                          onPress={() => {
-                            deleteItem(item.id);
-                          }}>
-                          <Icon
-                            name="delete"
-                            size={30}
-                            color={theme.card.text}
-                          />
-                        </TouchableOpacity>
-                      </View>
+                <TouchableOpacity>
+                  <View
+                    style={[
+                      styles.containerItem,
+                      {backgroundColor: theme.card.background},
+                    ]}>
+                    <View style={styles.topItem}>
+                      <Text
+                        style={[styles.titleItem, {color: theme.card.text}]}>
+                        {item.title}
+                      </Text>
+                      <Text style={[styles.descItem, {color: theme.card.text}]}>
+                        {item.description}
+                      </Text>
+                      <Text
+                        style={[styles.titleItem, {color: theme.card.text}]}>
+                        R${item.value}
+                      </Text>
                     </View>
-                  </TouchableOpacity>
-                </ScaleDecorator>
+                    <View style={styles.bottomItem}>
+                      <TouchableOpacity
+                        style={styles.buttonItem}
+                        onPress={() => {
+                          Linking.openURL(item.link);
+                        }}>
+                        <Icon name="link" size={30} color={theme.card.text} />
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={styles.buttonItem}
+                        onPress={() => {
+                          navigation.navigate('NewItem', {
+                            item: item,
+                            card: card,
+                            isEdit: true,
+                          });
+                        }}>
+                        <Icon
+                          name="edit"
+                          size={30}
+                          color={theme.card.text}
+                          selectionColor={theme.card.text}
+                        />
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={styles.buttonItem}
+                        onPress={() => {
+                          deleteItem(item.id);
+                        }}>
+                        <Icon name="delete" size={30} color={theme.card.text} />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </TouchableOpacity>
               );
             }}
           />
